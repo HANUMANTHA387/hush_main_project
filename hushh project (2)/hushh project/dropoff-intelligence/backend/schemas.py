@@ -69,6 +69,22 @@ class ProfileCompletionStat(BaseModel):
     bin: str
     users: int
 
+class LiveUser(BaseModel):
+    id: str
+    persona_type: str
+    connections: int
+    last_sync: str
+    guardian_mode: bool
+    status: str
+    action: str
+    time: str
+
+class LiveUsersResponse(BaseModel):
+    active_sessions: int
+    global_avg_duration: str
+    total_back_triggers: int
+    users: List[LiveUser]
+
 class AnalyticsResponse(BaseModel):
     sessionsTimeData: List[SessionTimeStat]
     dropoffStepData: List[DropoffStepStat]

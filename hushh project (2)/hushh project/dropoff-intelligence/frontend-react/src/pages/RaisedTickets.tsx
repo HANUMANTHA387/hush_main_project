@@ -1,5 +1,5 @@
 import React from 'react';
-import { 
+import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from 'recharts';
 import { CheckCircle, Clock, UserMinus, Layout as LayoutIcon } from 'lucide-react';
@@ -39,7 +39,7 @@ const RaisedTickets: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
           { label: 'Dropped Members', value: '1,240', icon: UserMinus, color: 'text-rose-600', bg: 'bg-rose-500/10' },
-          { label: 'Total Dashboards', value: '42 Active', icon: LayoutIcon, color: 'text-indigo-600', bg: 'bg-indigo-500/10' },
+          { label: 'Total Dashboards', value: '94 Active', icon: LayoutIcon, color: 'text-indigo-600', bg: 'bg-indigo-500/10' },
           { label: 'Solved Today', value: '124', icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-500/10' },
           { label: 'Pending Issues', value: '18', icon: Clock, color: 'text-amber-600', bg: 'bg-amber-500/10' },
         ].map((stat, i) => (
@@ -91,21 +91,19 @@ const RaisedTickets: React.FC = () => {
               <div key={i} className="p-4 rounded-2xl bg-white/40 backdrop-blur-md border border-white/40 hover:border-indigo-100 transition-all duration-300 group hover:bg-white/60 shadow-sm hover:shadow-md">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-[10px] font-bold text-slate-400 tracking-widest opacity-60 group-hover:opacity-100 group-hover:text-indigo-600 transition-all uppercase">{ticket.id}</span>
-                  <span className={`text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-tighter border ${
-                    ticket.status === 'Resolved' ? 'bg-emerald-50 border-emerald-100 text-emerald-600' :
+                  <span className={`text-[9px] px-2.5 py-0.5 rounded-full font-bold uppercase tracking-tighter border ${ticket.status === 'Resolved' ? 'bg-emerald-50 border-emerald-100 text-emerald-600' :
                     ticket.status === 'Pending' ? 'bg-amber-50 border-amber-100 text-amber-600' :
-                    'bg-rose-50 border-rose-100 text-rose-600'
-                  }`}>
+                      'bg-rose-50 border-rose-100 text-rose-600'
+                    }`}>
                     {ticket.status}
                   </span>
                 </div>
                 <div className="text-sm font-extrabold text-slate-900 mb-2 truncate group-hover:text-indigo-600 transition-colors">{ticket.issue}</div>
                 <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-tight">
-                  <span className={`${
-                    ticket.priority === 'Critical' ? 'text-rose-600' :
+                  <span className={`${ticket.priority === 'Critical' ? 'text-rose-600' :
                     ticket.priority === 'High' ? 'text-orange-600' :
-                    'text-slate-400'
-                  }`}>Priority: {ticket.priority}</span>
+                      'text-slate-400'
+                    }`}>Priority: {ticket.priority}</span>
                   <span className="text-slate-400 italic font-medium opacity-60">{ticket.time}</span>
                 </div>
               </div>

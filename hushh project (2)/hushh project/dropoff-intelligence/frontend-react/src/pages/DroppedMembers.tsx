@@ -1,6 +1,6 @@
 import React from 'react';
-import { 
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   PieChart, Pie, Cell, Legend
 } from 'recharts';
 import { UserMinus, AlertCircle, ArrowDownRight, Layout as LayoutIcon, Users } from 'lucide-react';
@@ -39,7 +39,7 @@ const DroppedMembers: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
           { label: 'Highest Loss Step', value: 'Email Verify', icon: AlertCircle, color: 'text-rose-600', bg: 'bg-rose-500/10' },
-          { label: 'Active Dashboards', value: '42 Active', icon: LayoutIcon, color: 'text-indigo-600', bg: 'bg-indigo-500/10' },
+          { label: 'Active Users', value: '94 Active', icon: LayoutIcon, color: 'text-indigo-600', bg: 'bg-indigo-500/10' },
           { label: 'Overall Drop Rate', value: '34.2%', icon: ArrowDownRight, color: 'text-amber-600', bg: 'bg-amber-500/10' },
           { label: 'Total Lost Users', value: '1,240', icon: UserMinus, color: 'text-rose-600', bg: 'bg-rose-500/10' },
         ].map((stat, i) => (
@@ -69,7 +69,7 @@ const DroppedMembers: React.FC = () => {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
                 <XAxis dataKey="step" stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
                 <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} axisLine={false} />
-                <Tooltip content={<div className="custom-tooltip" />} cursor={{fill: 'rgba(0,0,0,0.02)'}} />
+                <Tooltip content={<div className="custom-tooltip" />} cursor={{ fill: 'rgba(0,0,0,0.02)' }} />
                 <Bar dataKey="drop" fill="#6366f1" radius={[4, 4, 0, 0]} barSize={40} />
               </BarChart>
             </ResponsiveContainer>
@@ -97,7 +97,7 @@ const DroppedMembers: React.FC = () => {
                   ))}
                 </Pie>
                 <Tooltip content={<div className="custom-tooltip" />} />
-                <Legend verticalAlign="bottom" align="center" iconType="circle" iconSize={8} wrapperStyle={{fontSize: '11px', paddingTop: '10px', color: '#64748b'}} />
+                <Legend verticalAlign="bottom" align="center" iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '11px', paddingTop: '10px', color: '#64748b' }} />
               </PieChart>
             </ResponsiveContainer>
           </div>
