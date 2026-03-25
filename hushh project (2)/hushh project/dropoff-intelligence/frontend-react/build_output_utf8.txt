@@ -1,0 +1,8 @@
+﻿
+> pulse-ai-frontend@1.0.0 build
+> tsc && vite build
+
+src/main.tsx(1,1): error TS6133: 'React' is declared but its value is never read.
+src/pages/ProfileAnalytics.tsx(2,29): error TS6133: 'UserCheck' is declared but its value is never read.
+src/pages/ProfileAnalytics.tsx(2,40): error TS6133: 'Search' is declared but its value is never read.
+src/router/AppRouter.tsx(1,17): error TS6133: 'Suspense' is declared but its value is never read.

@@ -1,0 +1,104 @@
+﻿
+> pulse-ai-frontend@1.0.0 build
+> tsc && vite build
+
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+node.exe : 
+At line:1 char:1
++ & "C:\Program 
+Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSp 
+   ecified: (:String) [], RemoteEx  
+  ception
+    + FullyQualifiedErrorId : Nativ 
+   eCommandError
+ 
+[1m[33mwarn[39m[22m - The class 
+`ease-[cubic-bezier(0.25,0.8,0.25,1)
+]` is ambiguous and matches 
+multiple utilities.
+[1m[33mwarn[39m[22m - If this 
+is content and not a class, replace 
+it with `ease-&lsqb;cubic-bezier(0.2
+5,0.8,0.25,1)&rsqb;` to silence 
+this warning.
+[32mΓ£ô[39m 27 modules transformed.
+[31mx[39m Build failed in 723ms
+[31merror during build:
+[31m[vite:css] [postcss] 
+C:/Users/PRABHU/Documents/hushh 
+project (2)/hushh project/dropoff-in
+telligence/frontend-react/src/pages/
+DashboardsOverview.css:3:5: The `eas
+e-[cubic-bezier(0.25,0.8,0.25,1)]` 
+class does not exist. If `ease-[cubi
+c-bezier(0.25,0.8,0.25,1)]` is a 
+custom class, make sure it is 
+defined within a `@layer` 
+directive.[31m
+file: [36mC:/Users/PRABHU/Documents
+/hushh project (2)/hushh project/dro
+poff-intelligence/frontend-react/src
+/pages/DashboardsOverview.css:3:4[3
+1m
+    at Input.error 
+(C:\Users\PRABHU\Documents\hushh 
+project (2)\hushh project\dropoff-in
+telligence\frontend-react\node_modul
+es\postcss\lib\input.js:135:16)
+    at AtRule.error 
+(C:\Users\PRABHU\Documents\hushh 
+project (2)\hushh project\dropoff-in
+telligence\frontend-react\node_modul
+es\postcss\lib\node.js:146:32)
+    at processApply 
+(C:\Users\PRABHU\Documents\hushh 
+project (2)\hushh project\dropoff-in
+telligence\frontend-react\node_modul
+es\tailwindcss\lib\lib\expandApplyAt
+Rules.js:380:29)
+    at 
+C:\Users\PRABHU\Documents\hushh 
+project (2)\hushh project\dropoff-in
+telligence\frontend-react\node_modul
+es\tailwindcss\lib\lib\expandApplyAt
+Rules.js:551:9
+    at 
+C:\Users\PRABHU\Documents\hushh 
+project (2)\hushh project\dropoff-in
+telligence\frontend-react\node_modul
+es\tailwindcss\lib\processTailwindFe
+atures.js:55:50
+    at async plugins 
+(C:\Users\PRABHU\Documents\hushh 
+project (2)\hushh project\dropoff-in
+telligence\frontend-react\node_modul
+es\tailwindcss\lib\plugin.js:38:17)
+    at async LazyResult.runAsync 
+(C:\Users\PRABHU\Documents\hushh 
+project (2)\hushh project\dropoff-in
+telligence\frontend-react\node_modul
+es\postcss\lib\lazy-result.js:293:11
+)
+    at async compileCSS (file:///C:/
+Users/PRABHU/Documents/hushh%20proje
+ct%20(2)/hushh%20project/dropoff-int
+elligence/frontend-react/node_module
+s/vite/dist/node/chunks/dep-BK3b2jBa
+.js:36898:21)
+    at async Object.transform (file:
+///C:/Users/PRABHU/Documents/hushh%2
+0project%20(2)/hushh%20project/dropo
+ff-intelligence/frontend-react/node_
+modules/vite/dist/node/chunks/dep-BK
+3b2jBa.js:36171:11)
+    at async transform (file:///C:/U
+sers/PRABHU/Documents/hushh%20projec
+t%20(2)/hushh%20project/dropoff-inte
+lligence/frontend-react/node_modules
+/rollup/dist/es/shared/node-entry.js
+:21316:16)[39m

@@ -1,0 +1,4277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hushh Persona AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        :root {
+            --ink: #0d0d1a;
+            --ink2: #3a3a5c;
+            --muted: #8888aa;
+            --accent: #4f46e5;
+            --accent2: #7c3aed;
+            --teal: #06b6d4;
+            --green: #10b981;
+            --surface: #f4f5ff;
+            --card: #ffffff;
+            --border: #e5e7f0;
+            --sidebar: #ffffff;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+            background: #fafafa;
+            overflow-x: hidden
+        }
+
+        /* ===== PAGES ===== */
+        .page {
+            display: none !important;
+            min-height: 100vh;
+            flex-direction: column
+        }
+
+        .page.active {
+            display: flex !important
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 60px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            flex-shrink: 0
+        }
+
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 17px;
+            color: var(--ink);
+            cursor: pointer
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ink2);
+            font-size: 14px;
+            font-weight: 500;
+            transition: .2s;
+            cursor: pointer
+        }
+
+        .nav-links a.active {
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 2px
+        }
+
+        .nav-links a:hover {
+            color: var(--accent)
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 14px;
+            align-items: center
+        }
+
+        .btn-ghost {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--ink2)
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: .2s
+        }
+
+        .btn-primary:hover {
+            background: #3730a3
+        }
+
+        /* ===== LANDING ===== */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            padding: 80px 60px 60px;
+            align-items: center;
+            min-height: calc(100vh - 65px)
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #ede9fe;
+            color: #5b21b6;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 28px
+        }
+
+        .badge svg {
+            width: 14px;
+            height: 14px
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.08;
+            color: var(--ink);
+            margin-bottom: 22px
+        }
+
+        h1 span {
+            color: var(--accent)
+        }
+
+        .hero-desc {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--ink2);
+            max-width: 420px;
+            margin-bottom: 36px
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 36px
+        }
+
+        .btn-outline {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            padding: 11px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+            transition: .2s
+        }
+
+        .btn-outline:hover {
+            border-color: var(--accent);
+            color: var(--accent)
+        }
+
+        .social-proof {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .avatars {
+            display: flex
+        }
+
+        .avatars span {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border: 2px solid #fff;
+            margin-right: -8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #fff;
+            font-weight: 700
+        }
+
+        .proof-text {
+            font-size: 13px;
+            color: var(--ink2)
+        }
+
+        .proof-text strong {
+            color: var(--ink);
+            font-weight: 600
+        }
+
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            gap: 16px
+        }
+
+        .card-main {
+            background: #fff;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(79, 70, 229, .1);
+            border: 1px solid var(--border)
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px
+        }
+
+        .card-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700
+        }
+
+        .sync-label {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .persona-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff
+        }
+
+        .skeleton {
+            height: 8px;
+            border-radius: 4px;
+            background: #eef0ff;
+            margin-bottom: 10px
+        }
+
+        .skeleton.w60 {
+            width: 60%
+        }
+
+        .skeleton.w80 {
+            width: 80%
+        }
+
+        .skeleton.w45 {
+            width: 45%
+        }
+
+        .encrypted-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0fdf4;
+            color: #16a34a;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            padding: 8px 16px;
+            border-radius: 8px;
+            margin-top: 8px
+        }
+
+        .card-dark {
+            background: #0f0f1e;
+            border-radius: 16px;
+            padding: 20px;
+            color: #fff
+        }
+
+        .card-dark-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px
+        }
+
+        .guardian-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, .2);
+            border: 1.5px solid rgba(99, 102, 241, .4);
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .card-dark h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700
+        }
+
+        .card-dark p {
+            font-size: 13px;
+            color: #9ca3af;
+            line-height: 1.5
+        }
+
+        .side-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .side-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, .06);
+            border: 1px solid var(--border)
+        }
+
+        .connections-card {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 16px;
+            background: linear-gradient(135deg, #6366f1, #7c3aed);
+            color: #fff;
+            border-radius: 14px
+        }
+
+        .conn-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            line-height: 1
+        }
+
+        .conn-label {
+            font-size: 11px;
+            letter-spacing: .08em;
+            opacity: .8;
+            margin-top: 4px
+        }
+
+        .new-agent-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1.5px dashed #c7d2fe;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .new-agent-card:hover {
+            border-color: var(--accent);
+            background: #f5f3ff
+        }
+
+        .plus-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 300
+        }
+
+        .new-agent-card span {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: .06em
+        }
+
+        .section2 {
+            padding: 80px 60px;
+            background: #fff
+        }
+
+        .section2-header {
+            margin-bottom: 48px
+        }
+
+        .section2-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.1;
+            max-width: 500px
+        }
+
+        .section2-header h2 em {
+            color: var(--accent);
+            font-style: italic
+        }
+
+        .section2-desc {
+            font-size: 16px;
+            color: var(--ink2);
+            line-height: 1.7;
+            max-width: 580px;
+            margin-top: 16px
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--border)
+        }
+
+        .feat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #ede9fe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 20px
+        }
+
+        .feature-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--ink2);
+            line-height: 1.6
+        }
+
+        /* ===== LOGIN ===== */
+        #login-page {
+            background: var(--surface)
+        }
+
+        #login-page::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 15% 30%, rgba(99, 102, 241, .07) 0, transparent 70%), radial-gradient(ellipse 60% 50% at 85% 70%, rgba(124, 58, 237, .06) 0, transparent 70%);
+            pointer-events: none;
+            z-index: 0
+        }
+
+        .login-wrap {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            z-index: 1
+        }
+
+        .left-panel {
+            background: linear-gradient(145deg, #0d0d1a 0%, #1a1035 50%, #0f172a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .left-panel::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -60px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(99, 102, 241, .25) 0, transparent 70%)
+        }
+
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -40px;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124, 58, 237, .2) 0, transparent 70%)
+        }
+
+        .brand-mark {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #6366f1, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px
+        }
+
+        .brand-mark svg {
+            width: 26px;
+            height: 26px;
+            color: #fff
+        }
+
+        .left-panel h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.15;
+            margin-bottom: 20px
+        }
+
+        .left-panel h2 span {
+            color: #818cf8
+        }
+
+        .left-panel p {
+            font-size: 15px;
+            color: #9ca3af;
+            line-height: 1.7;
+            max-width: 320px;
+            margin-bottom: 48px
+        }
+
+        .trust-items {
+            display: flex;
+            flex-direction: column;
+            gap: 16px
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .trust-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #6366f1;
+            flex-shrink: 0
+        }
+
+        .trust-item span {
+            font-size: 14px;
+            color: #d1d5db
+        }
+
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 80px;
+            background: #fff
+        }
+
+        .form-box {
+            width: 100%;
+            max-width: 400px;
+            animation: fadeUp .5s ease both
+        }
+
+        .logo-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            justify-content: center
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #6366f1, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .logo-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #fff
+        }
+
+        .logo-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            color: var(--ink)
+        }
+
+        .tab-switch {
+            display: flex;
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 32px
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--muted);
+            border-radius: 9px;
+            transition: .2s
+        }
+
+        .tab-btn.active {
+            background: #fff;
+            color: var(--ink);
+            font-weight: 600;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, .08)
+        }
+
+        .form-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 6px
+        }
+
+        .form-sub {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 28px
+        }
+
+        .form-group {
+            margin-bottom: 18px
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .07em;
+            color: var(--ink2);
+            margin-bottom: 7px;
+            text-transform: uppercase
+        }
+
+        .input-wrap {
+            position: relative
+        }
+
+        .input-wrap svg {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: var(--muted)
+        }
+
+        input[type=email],
+        input[type=password],
+        input[type=text] {
+            width: 100%;
+            padding: 13px 14px 13px 42px;
+            border: 1.5px solid var(--border);
+            border-radius: 11px;
+            font-size: 14px;
+            font-family: 'DM Sans', sans-serif;
+            background: #fafafa;
+            color: var(--ink);
+            transition: .2s;
+            outline: none
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, .1)
+        }
+
+        input::placeholder {
+            color: #c0c0d0
+        }
+
+        .forgot {
+            font-size: 12px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 500;
+            float: right;
+            margin-top: -6px;
+            cursor: pointer
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: .2s;
+            margin-top: 8px;
+            letter-spacing: .02em
+        }
+
+        .submit-btn:hover {
+            opacity: .9;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, .35)
+        }
+
+        .submit-btn:active {
+            transform: translateY(0)
+        }
+
+        .divider {
+            text-align: center;
+            position: relative;
+            margin: 24px 0;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            height: 1px;
+            width: 42%;
+            background: var(--border)
+        }
+
+        .divider::before {
+            left: 0
+        }
+
+        .divider::after {
+            right: 0
+        }
+
+        .switch-auth {
+            text-align: center;
+            font-size: 14px;
+            color: var(--ink2);
+            margin-top: 20px
+        }
+
+        .switch-auth a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer
+        }
+
+        .switch-auth a:hover {
+            text-decoration: underline
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 28px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            color: #16a34a
+        }
+
+        .security-badge svg {
+            width: 14px;
+            height: 14px
+        }
+
+        .error-msg {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 10px 14px;
+            border-radius: 9px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none;
+            border-radius: 9px
+        }
+
+        .success-msg {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #16a34a;
+            padding: 10px 14px;
+            border-radius: 9px;
+            font-size: 13px;
+            margin-bottom: 16px;
+            display: none
+        }
+
+        /* ===== ONBOARDING ===== */
+        #onboarding-page {
+            background: var(--surface)
+        }
+
+        #onboarding-page nav {
+            padding: 18px 60px
+        }
+
+        .onboarding-progress {
+            display: flex;
+            align-items: center;
+            gap: 14px
+        }
+
+        .progress-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .07em;
+            color: var(--muted)
+        }
+
+        .progress-bar-wrap {
+            width: 180px;
+            height: 6px;
+            background: #e5e7f0;
+            border-radius: 3px;
+            overflow: hidden
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--teal));
+            border-radius: 3px;
+            width: 40%;
+            transition: .4s
+        }
+
+        .onboarding-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 60px 60px 40px
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 56px
+        }
+
+        .page-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1.1
+        }
+
+        .page-header h1 span {
+            color: var(--accent)
+        }
+
+        .page-header p {
+            font-size: 16px;
+            color: var(--ink2);
+            line-height: 1.6;
+            max-width: 500px;
+            margin: 14px auto 0
+        }
+
+        .ob-section {
+            width: 100%;
+            max-width: 860px;
+            margin-bottom: 48px
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px
+        }
+
+        .step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .section-label h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 700
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px
+        }
+
+        .role-card {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 18px;
+            padding: 24px 20px;
+            cursor: pointer;
+            transition: .2s;
+            position: relative
+        }
+
+        .role-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 4px 16px rgba(79, 70, 229, .1)
+        }
+
+        .role-card.selected {
+            border-color: var(--accent);
+            background: #f5f3ff;
+            box-shadow: 0 4px 20px rgba(79, 70, 229, .15)
+        }
+
+        .role-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+            font-size: 20px
+        }
+
+        .role-card h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .role-card p {
+            font-size: 13px;
+            color: var(--ink2);
+            line-height: 1.5
+        }
+
+        .check-mark {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 13px
+        }
+
+        .role-card.selected .check-mark {
+            display: flex
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px
+        }
+
+        .style-card {
+            border-radius: 18px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            height: 180px;
+            transition: .2s;
+            border: 2.5px solid transparent
+        }
+
+        .style-card:hover {
+            transform: translateY(-2px)
+        }
+
+        .style-card.selected {
+            border-color: #0d9488
+        }
+
+        .style-bg {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .style-bg.explorer {
+            background: radial-gradient(circle at 30% 50%, #4f0082, #0d0d2e)
+        }
+
+        .style-bg.passive {
+            background: linear-gradient(135deg, #1a1a2e, #2d2d44)
+        }
+
+        .style-bg.goal {
+            background: linear-gradient(135deg, #0d3d3d, #0f5c5c, #0d9488)
+        }
+
+        .sphere {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #9333ea, #1d0035);
+            box-shadow: 0 0 40px rgba(147, 51, 234, .5)
+        }
+
+        .style-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, .7))
+        }
+
+        .style-overlay h4 {
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700
+        }
+
+        .style-overlay p {
+            color: rgba(255, 255, 255, .7);
+            font-size: 12px;
+            margin-top: 4px
+        }
+
+        .style-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .15);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px
+        }
+
+        .style-card.selected .style-badge {
+            background: #0d9488
+        }
+
+        .cta-area {
+            text-align: center;
+            margin-top: 8px
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: .2s
+        }
+
+        .cta-btn:hover {
+            opacity: .9;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(79, 70, 229, .3)
+        }
+
+        .cta-secure {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--muted)
+        }
+
+        .cta-secure svg {
+            width: 14px;
+            height: 14px;
+            color: #16a34a
+        }
+
+        /* ===== LOADING ===== */
+        #loading-page {
+            background: var(--surface);
+            align-items: center;
+            justify-content: center
+        }
+
+        #loading-page::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 20% 20%, rgba(99, 102, 241, .08) 0, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, rgba(124, 58, 237, .07) 0, transparent 60%);
+            pointer-events: none
+        }
+
+        .loading-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 60px 40px;
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 700px
+        }
+
+        .icon-ring {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, .08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse-ring 2s ease-in-out infinite;
+            margin-bottom: 36px
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 22px;
+            background: linear-gradient(145deg, #6366f1, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 12px 40px rgba(99, 102, 241, .35)
+        }
+
+        .app-icon svg {
+            width: 40px;
+            height: 40px;
+            color: #fff
+        }
+
+        .loading-main h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 38px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 14px
+        }
+
+        .loading-subtitle {
+            font-size: 16px;
+            color: var(--ink2);
+            text-align: center;
+            line-height: 1.6;
+            max-width: 380px;
+            margin-bottom: 44px
+        }
+
+        .loading-track {
+            width: 100%;
+            max-width: 460px;
+            height: 8px;
+            background: #e0e7ff;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px
+        }
+
+        .loading-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--teal));
+            border-radius: 4px;
+            width: 0%;
+            transition: width .5s ease
+        }
+
+        .loading-status {
+            font-size: 14px;
+            color: var(--muted);
+            text-align: center
+        }
+
+        .status-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 460px;
+            margin-top: 32px
+        }
+
+        .status-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border: 1px solid var(--border);
+            opacity: .5;
+            transition: .4s
+        }
+
+        .status-card.done {
+            opacity: 1;
+            border-color: #bbf7d0
+        }
+
+        .status-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0
+        }
+
+        .status-card h5 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 2px
+        }
+
+        .status-card p {
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        /* ===== DASHBOARD ===== */
+        #dashboard-page {
+            background: var(--surface);
+            overflow: hidden;
+            height: 100vh
+        }
+
+        #dashboard-page nav {
+            flex-shrink: 0
+        }
+
+        .app {
+            display: flex;
+            flex: 1;
+            overflow: hidden
+        }
+
+        .sidebar {
+            width: 200px;
+            background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            padding: 20px 0
+        }
+
+        .sidebar-brand {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px
+        }
+
+        .brand-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--accent)
+        }
+
+        .brand-sub {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: .15s;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--ink2)
+        }
+
+        .nav-item:hover {
+            background: var(--surface);
+            color: var(--ink)
+        }
+
+        .nav-item.active {
+            color: var(--accent);
+            background: #ede9fe
+        }
+
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            border-top: 1px solid var(--border);
+            padding-top: 12px
+        }
+
+        .dash-main {
+            flex: 1;
+            overflow-y: auto;
+            padding: 28px 32px
+        }
+
+        .dash-section {
+            display: block;
+            animation: fadeUp .3s ease
+        }
+
+        .page-header-dash {
+            margin-bottom: 24px
+        }
+
+        .page-header-dash h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800
+        }
+
+        .page-header-dash p {
+            font-size: 14px;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        .ai-suggestion {
+            background: linear-gradient(135deg, #ede9fe, #e0e7ff);
+            border-radius: 14px;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            border: 1px solid #c7d2fe
+        }
+
+        .ai-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0
+        }
+
+        .ai-icon svg {
+            width: 18px;
+            height: 18px;
+            color: #fff
+        }
+
+        .ai-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            color: var(--accent);
+            margin-bottom: 3px
+        }
+
+        .ai-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--ink)
+        }
+
+        .start-btn {
+            margin-left: auto;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            white-space: nowrap;
+            transition: .2s
+        }
+
+        .start-btn:hover {
+            background: #3730a3
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 20px;
+            margin-bottom: 20px
+        }
+
+        .tracker-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border)
+        }
+
+        .tracker-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px
+        }
+
+        .tracker-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 17px;
+            font-weight: 700
+        }
+
+        .tracker-sub {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 3px
+        }
+
+        .progress-pct {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--accent)
+        }
+
+        .progress-bar-dash-wrap {
+            height: 10px;
+            background: #e0e7ff;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 20px 0 12px
+        }
+
+        .progress-bar-dash {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            border-radius: 5px;
+            width: 60%;
+            transition: .6s
+        }
+
+        .tracker-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--muted)
+        }
+
+        .task-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border)
+        }
+
+        .task-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .task-item {
+            padding: 12px;
+            border-radius: 10px;
+            background: var(--surface);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .task-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .task-dot.red {
+            background: #ef4444
+        }
+
+        .task-dot.blue {
+            background: #3b82f6
+        }
+
+        .task-dot.gray {
+            background: #9ca3af
+        }
+
+        .task-info h5 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px
+        }
+
+        .task-info span {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .view-all {
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink2);
+            margin-top: 4px;
+            transition: .2s
+        }
+
+        .view-all:hover {
+            border-color: var(--accent);
+            color: var(--accent)
+        }
+
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 20px
+        }
+
+        .analytics-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--border)
+        }
+
+        .analytics-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px
+        }
+
+        .analytics-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 17px;
+            font-weight: 700
+        }
+
+        .period-toggle {
+            display: flex;
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 3px
+        }
+
+        .period-btn {
+            padding: 5px 14px;
+            border: none;
+            background: none;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--muted);
+            transition: .2s
+        }
+
+        .period-btn.active {
+            background: #fff;
+            color: var(--ink);
+            font-weight: 600;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .08)
+        }
+
+        .chart-area {
+            height: 100px;
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            margin-bottom: 12px
+        }
+
+        .bar-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px
+        }
+
+        .bar {
+            width: 100%;
+            background: var(--surface);
+            border-radius: 4px;
+            transition: .4s
+        }
+
+        .bar.bar-active {
+            background: var(--accent)
+        }
+
+        .bar-label {
+            font-size: 10px;
+            color: var(--muted)
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 24px;
+            margin-top: 12px;
+            border-top: 1px solid var(--border);
+            padding-top: 14px
+        }
+
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 600;
+            letter-spacing: .05em
+        }
+
+        .stat-item .stat-val {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-top: 2px
+        }
+
+        .resources-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid var(--border)
+        }
+
+        .resources-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 14px
+        }
+
+        .resource-item {
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 12px;
+            height: 90px;
+            display: flex;
+            align-items: flex-end;
+            padding: 12px;
+            position: relative;
+            cursor: pointer
+        }
+
+        .resource-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover
+        }
+
+        .resource-bg.r1 {
+            background: linear-gradient(135deg, #0d0d2e, #1a1a4e)
+        }
+
+        .resource-bg.r2 {
+            background: linear-gradient(135deg, #1a2a0d, #1e3a1e)
+        }
+
+        .resource-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, .7))
+        }
+
+        .resource-content {
+            position: relative;
+            z-index: 1
+        }
+
+        .resource-tag {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            color: #60a5fa;
+            margin-bottom: 3px
+        }
+
+        .resource-content h5 {
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        /* ===== PRIVACY PAGE ===== */
+        #privacy-page {
+            min-height: 100vh
+        }
+
+        .privacy-main {
+            flex: 1;
+            padding: 70px 60px
+        }
+
+        .hero-badge-p {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #d1fae5;
+            color: #065f46;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            padding: 7px 16px;
+            border-radius: 20px;
+            margin-bottom: 24px
+        }
+
+        .privacy-hero-top {
+            text-align: center;
+            margin-bottom: 60px
+        }
+
+        .privacy-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.05;
+            margin-bottom: 16px
+        }
+
+        .privacy-sub {
+            font-size: 17px;
+            color: var(--ink2);
+            line-height: 1.7;
+            max-width: 560px;
+            margin: 0 auto 60px
+        }
+
+        .privacy-grid {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto
+        }
+
+        .toggle-item {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+            transition: .2s
+        }
+
+        .toggle-item:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, .05)
+        }
+
+        .toggle-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--surface);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0
+        }
+
+        .toggle-icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--accent)
+        }
+
+        .toggle-text {
+            flex: 1
+        }
+
+        .toggle-text h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .toggle-text p {
+            font-size: 14px;
+            color: var(--ink2);
+            line-height: 1.6
+        }
+
+        .switch {
+            position: relative;
+            width: 50px;
+            height: 27px;
+            cursor: pointer;
+            display: inline-block
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background: #e5e7f0;
+            border-radius: 34px;
+            transition: .3s
+        }
+
+        .slider:before {
+            position: absolute;
+            content: '';
+            height: 21px;
+            width: 21px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: .3s;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .2)
+        }
+
+        input:checked+.slider {
+            background: var(--accent)
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(23px)
+        }
+
+        .privacy-vault {
+            background: #0f0f1e;
+            border-radius: 20px;
+            padding: 28px;
+            color: #fff
+        }
+
+        .vault-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px
+        }
+
+        .vault-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, .2);
+            border: 1.5px solid rgba(99, 102, 241, .4);
+            display: flex;
+            align-items: center;
+            justify-content: center
+        }
+
+        .vault-icon svg {
+            width: 20px;
+            height: 20px;
+            color: #818cf8
+        }
+
+        .vault-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700
+        }
+
+        .vault-stat {
+            background: rgba(255, 255, 255, .05);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px
+        }
+
+        .vault-stat-label {
+            font-size: 11px;
+            color: #6b7280;
+            font-weight: 600;
+            letter-spacing: .06em;
+            margin-bottom: 6px
+        }
+
+        .vault-stat-val {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff
+        }
+
+        .vault-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, .1);
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden
+        }
+
+        .vault-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, #6366f1, #06b6d4)
+        }
+
+        /* ===== CONTROL PAGE ===== */
+        #control-page {
+            background: var(--surface)
+        }
+
+        .control-main {
+            flex: 1;
+            padding: 60px
+        }
+
+        .control-hero {
+            margin-bottom: 36px
+        }
+
+        .ctrl-status-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin-bottom: 28px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ink2)
+        }
+
+        .ctrl-status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .ctrl-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+
+        .ctrl-status-dot.green {
+            background: #10b981;
+            box-shadow: 0 0 6px rgba(16, 185, 129, .5)
+        }
+
+        .ctrl-status-dot.yellow {
+            background: #f59e0b
+        }
+
+        .ctrl-sync-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: .2s
+        }
+
+        .ctrl-sync-btn:hover {
+            background: #3730a3
+        }
+
+        .ctrl-sync-btn svg {
+            transition: .3s
+        }
+
+        .ctrl-sync-btn.spinning svg {
+            animation: spin .7s linear infinite
+        }
+
+        .ctrl-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px
+        }
+
+        .ctrl-col {
+            display: flex;
+            flex-direction: column;
+            gap: 20px
+        }
+
+        .ctrl-card {
+            background: #fff;
+            border-radius: 18px;
+            padding: 24px;
+            border: 1px solid var(--border)
+        }
+
+        .ctrl-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .ctrl-card-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 700
+        }
+
+        .ctrl-add-btn {
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1.5px solid var(--accent);
+            background: none;
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            transition: .2s
+        }
+
+        .ctrl-add-btn:hover {
+            background: var(--accent);
+            color: #fff
+        }
+
+        .ctrl-badge {
+            font-size: 11px;
+            font-weight: 700;
+            background: #dcfce7;
+            color: #16a34a;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: .05em
+        }
+
+        .ctrl-agent-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: var(--surface);
+            margin-bottom: 10px;
+            transition: .2s
+        }
+
+        .ctrl-agent-item:hover {
+            background: #ede9fe
+        }
+
+        .ctrl-agent-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0
+        }
+
+        .ctrl-agent-info {
+            flex: 1
+        }
+
+        .ctrl-agent-info h5 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px
+        }
+
+        .ctrl-agent-info span {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .ctrl-agent-status {
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px
+        }
+
+        .ctrl-agent-status.active {
+            background: #dcfce7;
+            color: #16a34a
+        }
+
+        .ctrl-agent-status.idle {
+            background: #fef9c3;
+            color: #a16207
+        }
+
+        .ctrl-agent-status.paused {
+            background: #fce7f3;
+            color: #9d174d
+        }
+
+        .ctrl-integration-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .ctrl-integration-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0
+        }
+
+        .ctrl-int-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0
+        }
+
+        .ctrl-health-row {
+            display: flex;
+            align-items: center;
+            gap: 0
+        }
+
+        .ctrl-quick-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 18px 12px;
+            border-radius: 14px;
+            border: 1.5px solid var(--border);
+            background: var(--surface);
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ink2);
+            transition: .2s;
+            text-align: center
+        }
+
+        .ctrl-quick-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: #f5f3ff
+        }
+
+        .ctrl-log-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px
+        }
+
+        .ctrl-log-item:last-child {
+            border-bottom: none
+        }
+
+        .ctrl-log-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 4px;
+            flex-shrink: 0
+        }
+
+        .ctrl-log-time {
+            font-size: 11px;
+            color: var(--muted);
+            white-space: nowrap;
+            margin-top: 2px
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: #fff;
+            border-top: 1px solid var(--border);
+            padding: 28px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0
+        }
+
+        .footer-brand {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 15px
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: var(--muted);
+            text-decoration: none;
+            transition: .2s;
+            cursor: pointer
+        }
+
+        .footer-links a:hover {
+            color: var(--accent)
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        @keyframes pulse-ring {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: .7
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp .6s ease both
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: #0f0f1e;
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 9999;
+            transform: translateY(80px);
+            opacity: 0;
+            transition: .3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 320px
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1
+        }
+
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            flex-shrink: 0
+        }
+
+        .toast-icon.err {
+            background: #ef4444
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .5);
+            z-index: 500;
+            display: none;
+            align-items: center;
+            justify-content: center
+        }
+
+        .modal-overlay.open {
+            display: flex
+        }
+
+        .modal {
+            background: #fff;
+            border-radius: 20px;
+            padding: 36px;
+            max-width: 440px;
+            width: 90%;
+            animation: fadeUp .3s ease
+        }
+
+        .modal h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 10px
+        }
+
+        .modal p {
+            font-size: 14px;
+            color: var(--ink2);
+            line-height: 1.6;
+            margin-bottom: 24px
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 12px
+        }
+
+        .modal-btns button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            border: none;
+            transition: .2s
+        }
+
+        .modal-cancel {
+            background: var(--surface);
+            color: var(--ink)
+        }
+
+        .modal-confirm {
+            background: var(--accent);
+            color: #fff
+        }
+
+        .modal-confirm:hover {
+            background: #3730a3
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== LANDING ===== -->
+    <div id="landing-page" class="page active">
+        <nav>
+            <div class="nav-logo" onclick="showPage('landing-page')">Hushh Persona AI</div>
+            <div class="nav-links">
+                <a class="active" onclick="showPage('landing-page')">Dashboard</a>
+                <a onclick="requireAuth('privacy-page')">Privacy</a>
+                <a onclick="requireAuth('control-page')">Control</a>
+            </div>
+            <div class="nav-right">
+                <button class="btn-ghost" onclick="showPage('login-page')">Sign In</button>
+                <button class="btn-primary" onclick="showPage('login-page')">Get Started</button>
+            </div>
+        </nav>
+
+        <section class="hero fade-up">
+            <div class="hero-left">
+                <div class="badge">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    PRIVACY FIRST ARCHITECTURE
+                </div>
+                <h1>Your Personal AI<br>Agent that <span>Learns</span> and<br>Adapts to You</h1>
+                <p class="hero-desc">Privacy-first AI that understands your behavior and builds a personalized
+                    experience without ever compromising your sensitive data.</p>
+                <div class="hero-btns">
+                    <button class="btn-primary" style="padding:13px 28px;font-size:15px"
+                        onclick="showPage('login-page')">Get Started</button>
+                    <button class="btn-outline" style="padding:13px 28px;font-size:15px"
+                        onclick="document.querySelector('.section2').scrollIntoView({behavior:'smooth'})">Learn
+                        More</button>
+                </div>
+                <div class="social-proof">
+                    <div class="avatars"><span>A</span><span>B</span><span>C</span></div>
+                    <div class="proof-text"><strong>Trusted by 12k+ pioneers</strong><br>Managing secure digital
+                        personas</div>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="card-main">
+                    <div class="card-header">
+                        <div>
+                            <h3>Active Persona</h3>
+                            <div class="sync-label">Professional Profile • Last sync 2m ago</div>
+                        </div>
+                        <div class="persona-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                <circle cx="12" cy="8" r="4" />
+                                <path d="M20 21a8 8 0 10-16 0" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="skeleton w80"></div>
+                    <div class="skeleton w60"></div>
+                    <div class="skeleton w80"></div>
+                    <div class="skeleton w45"></div>
+                    <div class="encrypted-badge">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" />
+                            <path d="M7 11V7a5 5 0 0110 0v4" />
+                        </svg>
+                        DATA ENCRYPTED
+                    </div>
+                </div>
+
+                <div class="card-dark">
+                    <div class="card-dark-header">
+                        <div class="guardian-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#818cf8"
+                                stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h4>Guardian Mode Active</h4>
+                        </div>
+                    </div>
+                    <p>All behavioral patterns are obfuscated via local-only differential privacy.</p>
+                </div>
+
+                <div class="side-row">
+                    <div class="side-card" style="background:#1e1b2e;border-radius:14px;padding:16px">
+                        <div
+                            style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#a855f7);margin-bottom:10px">
+                        </div>
+                        <h5 style="color:#fff;font-size:13px;font-weight:600;margin-bottom:2px">Social Persona</h5>
+                        <span style="font-size:11px;color:#f87171">Restricted Access</span>
+                    </div>
+                    <div class="connections-card">
+                        <div style="font-size:22px;margin-bottom:4px">✦</div>
+                        <div class="conn-num">142</div>
+                        <div class="conn-label">CONNECTIONS</div>
+                    </div>
+                </div>
+
+                <div class="new-agent-card" onclick="requireAuth('control-page')">
+                    <div class="plus-btn">+</div>
+                    <span>NEW AGENT</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section2">
+            <div class="section2-header">
+                <h2>Designed for the <em>Individual</em>, not the Corporation.</h2>
+                <p class="section2-desc">While other AI platforms harvest your world to train their models, Hushh builds
+                    a wall. Your persona remains yours—encrypted, local, and entirely under your command. It's not just
+                    an assistant; it's a digital extension of your will.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feat-icon">⊞</div>
+                    <h4>Zero-Knowledge</h4>
+                    <p>We never see your data. Even our servers are blind to your persona's identity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feat-icon" style="background:#e0f2fe">⟺</div>
+                    <h4>Edge Computing</h4>
+                    <p>The AI learns on your device. Most processing happens locally to ensure speed and safety.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feat-icon" style="background:#f0fdf4">✓</div>
+                    <h4>Granular Control</h4>
+                    <p>Switch between personas for work, life, and play with a single swipe.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div>
+                <div class="footer-brand">Hushh Persona AI</div>
+                <div class="footer-copy">© 2024 Hushh Persona AI. Your data. Your control.</div>
+            </div>
+            <div class="footer-links">
+                <a onclick="requireAuth('privacy-page')">Privacy Policy</a>
+                <a>Terms of Service</a>
+                <a>Security Whitepaper</a>
+                <a>Contact Support</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== LOGIN ===== -->
+    <div id="login-page" class="page">
+        <div class="login-wrap" style="flex:1">
+            <div class="left-panel">
+                <div class="brand-mark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                </div>
+                <h2>Your Digital<br>Sanctuary<br><span>Awaits.</span></h2>
+                <p>Privacy-first AI that learns and adapts to you — without ever compromising your sensitive data.</p>
+                <div class="trust-items">
+                    <div class="trust-item">
+                        <div class="trust-dot"></div><span>End-to-end encrypted vault</span>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-dot" style="background:#06b6d4"></div><span>Zero-knowledge architecture</span>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-dot" style="background:#10b981"></div><span>Local-first edge processing</span>
+                    </div>
+                    <div class="trust-item">
+                        <div class="trust-dot" style="background:#f59e0b"></div><span>Granular persona control</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="form-box">
+                    <div class="logo-top">
+                        <div class="logo-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <rect x="3" y="11" width="18" height="11" rx="2" />
+                                <path d="M7 11V7a5 5 0 0110 0v4" />
+                            </svg>
+                        </div>
+                        <div class="logo-name">Hushh Persona AI</div>
+                    </div>
+
+                    <div class="tab-switch">
+                        <button class="tab-btn active" id="signin-tab" onclick="switchTab('signin')">Sign In</button>
+                        <button class="tab-btn" id="signup-tab" onclick="switchTab('signup')">Sign Up</button>
+                    </div>
+
+                    <div id="signin-form">
+                        <div class="form-title">Welcome Back</div>
+                        <div class="form-sub">Login to continue your personalized experience</div>
+                        <div id="signin-error" class="error-msg">Invalid email or password. Please try again.</div>
+                        <div id="signin-success" class="success-msg">✓ Login successful! Redirecting...</div>
+
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                                    <path d="m22 7-10 7L2 7" />
+                                </svg>
+                                <input type="email" id="signin-email" placeholder="name@example.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password <a class="forgot" onclick="forgotPassword()">Forgot password?</a></label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                                </svg>
+                                <input type="password" id="signin-password" placeholder="••••••••">
+                            </div>
+                        </div>
+
+                        <button class="submit-btn" onclick="handleSignin()">Login</button>
+                        <div class="switch-auth">Don't have an account? <a onclick="switchTab('signup')">Sign Up</a>
+                        </div>
+                    </div>
+
+                    <div id="signup-form" style="display:none">
+                        <div class="form-title">Create Account</div>
+                        <div class="form-sub">Build your private digital persona today</div>
+                        <div id="signup-error" class="error-msg"></div>
+                        <div id="signup-success" class="success-msg"></div>
+
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="8" r="4" />
+                                    <path d="M20 21a8 8 0 10-16 0" />
+                                </svg>
+                                <input type="text" id="signup-name" placeholder="Your full name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                                    <path d="m22 7-10 7L2 7" />
+                                </svg>
+                                <input type="email" id="signup-email" placeholder="name@example.com">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Password</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                                </svg>
+                                <input type="password" id="signup-password"
+                                    placeholder="Create a strong password (min 8 chars)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <div class="input-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                                </svg>
+                                <input type="password" id="signup-confirm" placeholder="Repeat your password">
+                            </div>
+                        </div>
+
+                        <button class="submit-btn" onclick="handleSignup()">Create Secure Account</button>
+                        <div class="switch-auth">Already have an account? <a onclick="switchTab('signin')">Sign In</a>
+                        </div>
+                    </div>
+
+                    <div class="security-badge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        END-TO-END ENCRYPTED SANCTUARY
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer style="position:relative;z-index:1">
+            <div>
+                <div class="footer-brand">Hushh Persona AI</div>
+                <div class="footer-copy">© 2024 Hushh Persona AI. Your data. Your control.</div>
+            </div>
+            <div class="footer-links">
+                <a>Privacy Policy</a><a>Terms of Service</a><a>Security Whitepaper</a><a>Contact Support</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== ONBOARDING ===== -->
+    <div id="onboarding-page" class="page">
+        <nav>
+            <div class="nav-logo">Hushh Persona AI</div>
+            <div class="onboarding-progress">
+                <div class="progress-label">SETUP PROGRESS: 40%</div>
+                <div class="progress-bar-wrap">
+                    <div class="progress-bar-fill"></div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="onboarding-main" style="flex:1">
+            <div class="page-header">
+                <h1>Refine Your <span>Sanctuary</span></h1>
+                <p>Let's personalize your AI experience. These settings ensure your Persona acts with the right context
+                    and privacy constraints.</p>
+            </div>
+
+            <div class="ob-section">
+                <div class="section-label">
+                    <div class="step-num">1</div>
+                    <h2>Who are you?</h2>
+                </div>
+                <div class="role-grid">
+                    <div class="role-card selected" onclick="selectRole(this,'Student')">
+                        <div class="role-icon">🎓</div>
+                        <h4>Student</h4>
+                        <p>Organize research and focus on learning milestones.</p>
+                        <div class="check-mark">✓</div>
+                    </div>
+                    <div class="role-card" onclick="selectRole(this,'Developer')">
+                        <div class="role-icon">⌨️</div>
+                        <h4>Developer</h4>
+                        <p>Automation and API-driven privacy management.</p>
+                        <div class="check-mark">✓</div>
+                    </div>
+                    <div class="role-card" onclick="selectRole(this,'Professional')">
+                        <div class="role-icon">💼</div>
+                        <h4>Professional</h4>
+                        <p>High-level insights for career growth and networking.</p>
+                        <div class="check-mark">✓</div>
+                    </div>
+                    <div class="role-card" onclick="selectRole(this,'Customer')">
+                        <div class="role-icon">👤</div>
+                        <h4>Customer</h4>
+                        <p>Secure personal data and curated retail discoveries.</p>
+                        <div class="check-mark">✓</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ob-section">
+                <div class="section-label">
+                    <div class="step-num" style="background:#0d9488">2</div>
+                    <h2>How do you use apps?</h2>
+                </div>
+                <div class="style-grid">
+                    <div class="style-card" onclick="selectStyle(this,'Explorer')">
+                        <div class="style-bg explorer">
+                            <div class="sphere"></div>
+                        </div>
+                        <div class="style-badge">◎</div>
+                        <div class="style-overlay">
+                            <h4>Explorer</h4>
+                        </div>
+                    </div>
+                    <div class="style-card" onclick="selectStyle(this,'Passive')">
+                        <div class="style-bg passive">
+                            <div style="width:40px;height:60px;background:#2a2a3e;border-radius:4px"></div>
+                        </div>
+                        <div class="style-badge">◉</div>
+                        <div class="style-overlay">
+                            <h4>Passive</h4>
+                        </div>
+                    </div>
+                    <div class="style-card selected" onclick="selectStyle(this,'Goal-Oriented')">
+                        <div class="style-bg goal"></div>
+                        <div class="style-badge" style="background:#0d9488">⏻</div>
+                        <div class="style-overlay">
+                            <h4>Goal-Oriented</h4>
+                            <p>Efficiency is my priority. Every action must have purpose.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-area">
+                <button class="cta-btn" onclick="completeOnboarding()">Continue to Dashboard →</button>
+                <div class="cta-secure">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    All selections are end-to-end encrypted.
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-brand">Hushh Persona AI</div>
+            <div style="font-size:12px;color:#8888aa">© 2024 Hushh Persona AI. Your data. Your control.</div>
+            <div class="footer-links"><a>Privacy Policy</a><a>Security Whitepaper</a></div>
+        </footer>
+    </div>
+
+    <!-- ===== LOADING ===== -->
+    <div id="loading-page" class="page"
+        style="flex-direction:column;min-height:100vh;align-items:center;justify-content:center;background:var(--surface)">
+        <div class="loading-main">
+            <div class="icon-ring">
+                <div class="app-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                </div>
+            </div>
+            <h1>Building Your Sanctuary</h1>
+            <p class="loading-subtitle">We're encrypting your preferences and initializing your private AI persona.</p>
+            <div class="loading-track">
+                <div class="loading-fill" id="loading-fill"></div>
+            </div>
+            <div class="loading-status" id="loading-status">Initializing secure environment...</div>
+
+            <div class="status-cards" id="status-cards">
+                <div class="status-card" id="sc1">
+                    <div class="status-icon" style="background:#ede9fe">🔑</div>
+                    <div>
+                        <h5>Generating Encryption Keys</h5>
+                        <p>Creating your unique cryptographic identity</p>
+                    </div>
+                </div>
+                <div class="status-card" id="sc2">
+                    <div class="status-icon" style="background:#e0f2fe">🧠</div>
+                    <div>
+                        <h5>Training Persona Model</h5>
+                        <p>Local-only AI model initialization</p>
+                    </div>
+                </div>
+                <div class="status-card" id="sc3">
+                    <div class="status-icon" style="background:#f0fdf4">🛡️</div>
+                    <div>
+                        <h5>Activating Guardian Mode</h5>
+                        <p>Privacy shield is online</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== DASHBOARD ===== -->
+    <div id="dashboard-page" class="page" style="flex-direction:column;height:100vh;overflow:hidden">
+        <nav style="flex-shrink:0">
+            <div class="nav-logo" onclick="showPage('landing-page')">Hushh Persona AI</div>
+            <div class="nav-links">
+                <a class="active" onclick="showPage('dashboard-page')">Dashboard</a>
+                <a onclick="showPage('privacy-page')">Privacy</a>
+                <a onclick="showPage('control-page')">Control</a>
+            </div>
+            <div class="nav-right">
+                <button class="btn-ghost" onclick="openSignoutModal()">Sign Out</button>
+                <button class="btn-primary" onclick="showPage('onboarding-page')">+ New Persona</button>
+            </div>
+        </nav>
+
+        <div class="app">
+            <aside class="sidebar">
+                <div class="sidebar-brand">
+                    <div class="brand-name">Persona AI</div>
+                    <div class="brand-sub">Secure Sanctuary</div>
+                </div>
+                <div class="nav-item active" data-section="overview" onclick="switchSection('overview',this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                    </svg>
+                    Overview
+                </div>
+                <div class="nav-item" data-section="insights" onclick="switchSection('insights',this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 8v4l3 3" />
+                    </svg>
+                    Insights
+                </div>
+                <div class="nav-item" data-section="vault" onclick="switchSection('vault',this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" />
+                        <path d="M7 11V7a5 5 0 0110 0v4" />
+                    </svg>
+                    Vault
+                </div>
+                <div class="nav-item" data-section="connections" onclick="switchSection('connections',this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="5" r="3" />
+                        <circle cx="19" cy="12" r="3" />
+                        <circle cx="12" cy="19" r="3" />
+                        <circle cx="5" cy="12" r="3" />
+                        <path d="M12 8v3M16.5 10.5l-2.5 2M12 16v-3M7.5 10.5l2.5 2" />
+                    </svg>
+                    Connections
+                </div>
+                <div class="nav-item" data-section="settings" onclick="switchSection('settings',this)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" />
+                    </svg>
+                    Settings
+                </div>
+                <div class="sidebar-bottom">
+                    <div class="nav-item" data-section="help" onclick="switchSection('help',this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+                        Help
+                    </div>
+                    <div class="nav-item" onclick="openSignoutModal()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                            <polyline points="16 17 21 12 16 7" />
+                            <line x1="21" y1="12" x2="9" y2="12" />
+                        </svg>
+                        Sign Out
+                    </div>
+                </div>
+            </aside>
+
+            <main class="dash-main" id="dash-main-area">
+
+                <!-- OVERVIEW -->
+                <div id="section-overview" class="dash-section">
+                    <div class="page-header-dash">
+                        <h1 id="dash-greeting">Welcome, Student 👋</h1>
+                        <p>Here's your personalized learning space</p>
+                    </div>
+                    <div class="ai-suggestion">
+                        <div class="ai-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="ai-label">AI SUGGESTION</div>
+                            <div class="ai-text" id="ai-suggestion-text">"You seem goal-oriented today. Try completing
+                                Module 3."</div>
+                        </div>
+                        <button class="start-btn" onclick="showToast('✓ Module 3 launched!')">Start Module</button>
+                    </div>
+                    <div class="content-grid">
+                        <div class="tracker-card">
+                            <div class="tracker-header">
+                                <div>
+                                    <h3>Learning Tracker</h3>
+                                    <div class="tracker-sub">Semester Progress: Advanced Cryptography</div>
+                                </div>
+                                <div class="progress-pct">60%</div>
+                            </div>
+                            <div class="progress-bar-dash-wrap">
+                                <div class="progress-bar-dash"></div>
+                            </div>
+                            <div class="tracker-footer">
+                                <span>Module 2 Completed</span>
+                                <span>Module 5 Pending</span>
+                            </div>
+                        </div>
+                        <div class="task-card">
+                            <h3>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                                    <line x1="16" y1="2" x2="16" y2="6" />
+                                    <line x1="8" y1="2" x2="8" y2="6" />
+                                    <line x1="3" y1="10" x2="21" y2="10" />
+                                </svg>
+                                Task Manager
+                            </h3>
+                            <div class="task-item">
+                                <div class="task-dot red"></div>
+                                <div class="task-info">
+                                    <h5>Research Paper Draft</h5><span>Due in 2 hours</span>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-dot blue"></div>
+                                <div class="task-info">
+                                    <h5>Peer Review: Session 4</h5><span>Tomorrow, 10:00 AM</span>
+                                </div>
+                            </div>
+                            <div class="task-item">
+                                <div class="task-dot gray"></div>
+                                <div class="task-info">
+                                    <h5>Lab Submission</h5><span>Friday</span>
+                                </div>
+                            </div>
+                            <button class="view-all" onclick="showToast('✓ All 3 tasks loaded')">View All 3
+                                Pending</button>
+                        </div>
+                    </div>
+                    <div class="bottom-grid">
+                        <div class="analytics-card">
+                            <div class="analytics-header">
+                                <h3>Study Time Analytics</h3>
+                                <div class="period-toggle">
+                                    <button class="period-btn active" onclick="setPeriod(this,'week')">Week</button>
+                                    <button class="period-btn" onclick="setPeriod(this,'month')">Month</button>
+                                </div>
+                            </div>
+                            <div class="chart-area" id="chart"></div>
+                            <div style="display:flex;justify-content:space-between;padding:0 4px" id="bar-labels"></div>
+                            <div class="stats-row">
+                                <div class="stat-item">
+                                    <div class="stat-label">FOCUS HOURS</div>
+                                    <div class="stat-val" id="focus-hours">24.5h</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">PRODUCTIVITY</div>
+                                    <div class="stat-val" style="color:#10b981" id="productivity">+12%</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="resources-card">
+                            <h3>Recommended Resources</h3>
+                            <div class="resource-item" onclick="showToast('✓ Opening resource...')">
+                                <div class="resource-bg r1"></div>
+                                <div class="resource-overlay"></div>
+                                <div class="resource-content">
+                                    <div class="resource-tag">DEEP DIVE</div>
+                                    <h5>Advanced Neural Architectures</h5>
+                                </div>
+                            </div>
+                            <div class="resource-item" onclick="showToast('✓ Opening guide...')">
+                                <div class="resource-bg r2"></div>
+                                <div class="resource-overlay"></div>
+                                <div class="resource-content">
+                                    <div class="resource-tag" style="color:#6ee7b7">PRIVACY GUIDE</div>
+                                    <h5>Zero-Knowledge Protocols 101</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INSIGHTS -->
+                <div id="section-insights" class="dash-section" style="display:none">
+                    <div class="page-header-dash">
+                        <h1>Insights</h1>
+                        <p>AI-powered analysis of your learning patterns</p>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px">
+                        <div class="tracker-card" style="text-align:center">
+                            <div style="font-size:36px;margin-bottom:8px">🔥</div>
+                            <div
+                                style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--accent)">
+                                12</div>
+                            <div style="font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.05em">DAY
+                                STREAK</div>
+                        </div>
+                        <div class="tracker-card" style="text-align:center">
+                            <div style="font-size:36px;margin-bottom:8px">⚡</div>
+                            <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#10b981">87%
+                            </div>
+                            <div style="font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.05em">FOCUS
+                                RATE</div>
+                        </div>
+                        <div class="tracker-card" style="text-align:center">
+                            <div style="font-size:36px;margin-bottom:8px">📚</div>
+                            <div style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#f59e0b">5
+                            </div>
+                            <div style="font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.05em">MODULES
+                                DONE</div>
+                        </div>
+                    </div>
+                    <div class="tracker-card" style="margin-bottom:20px">
+                        <div class="tracker-header">
+                            <div>
+                                <h3>Weekly Insight Report</h3>
+                                <div class="tracker-sub">Generated by your Persona AI · March 2026</div>
+                            </div>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:14px">
+                            <div
+                                style="padding:14px;background:var(--surface);border-radius:12px;border-left:3px solid var(--accent)">
+                                <div
+                                    style="font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:4px">
+                                    PEAK PERFORMANCE</div>
+                                <div style="font-size:14px;color:var(--ink)">You're most productive on
+                                    <strong>Wednesdays 2–5 PM</strong>. Consider scheduling your hardest tasks then.
+                                </div>
+                            </div>
+                            <div
+                                style="padding:14px;background:var(--surface);border-radius:12px;border-left:3px solid #10b981">
+                                <div
+                                    style="font-size:12px;font-weight:700;color:#10b981;letter-spacing:.06em;margin-bottom:4px">
+                                    IMPROVEMENT DETECTED</div>
+                                <div style="font-size:14px;color:var(--ink)">Your session length increased by <strong>18
+                                        minutes on average</strong> this week. Keep it up!</div>
+                            </div>
+                            <div
+                                style="padding:14px;background:var(--surface);border-radius:12px;border-left:3px solid #f59e0b">
+                                <div
+                                    style="font-size:12px;font-weight:700;color:#f59e0b;letter-spacing:.06em;margin-bottom:4px">
+                                    ATTENTION NEEDED</div>
+                                <div style="font-size:14px;color:var(--ink)">Weekend study time dropped
+                                    <strong>40%</strong>. A light 30-min review on Sundays could prevent knowledge gaps.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-header">
+                            <h3>Topic Mastery</h3>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px" id="mastery-bars"></div>
+                    </div>
+                </div>
+
+                <!-- VAULT -->
+                <div id="section-vault" class="dash-section" style="display:none">
+                    <div class="page-header-dash">
+                        <h1>🔐 Data Vault</h1>
+                        <p>Your encrypted private data store — only you can read this</p>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+                        <div style="background:#0f0f1e;border-radius:16px;padding:24px;color:#fff">
+                            <div
+                                style="font-size:11px;color:#6b7280;font-weight:700;letter-spacing:.07em;margin-bottom:8px">
+                                VAULT STATUS</div>
+                            <div
+                                style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#10b981;margin-bottom:4px">
+                                ● LOCKED</div>
+                            <div style="font-size:13px;color:#9ca3af">AES-256-GCM encryption active</div>
+                            <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+                                <div style="display:flex;justify-content:space-between;font-size:13px"><span
+                                        style="color:#6b7280">Entries</span><span
+                                        style="color:#fff;font-weight:600">1,842</span></div>
+                                <div style="display:flex;justify-content:space-between;font-size:13px"><span
+                                        style="color:#6b7280">Vault size</span><span
+                                        style="color:#fff;font-weight:600">4.2 MB</span></div>
+                                <div style="display:flex;justify-content:space-between;font-size:13px"><span
+                                        style="color:#6b7280">Last backup</span><span
+                                        style="color:#fff;font-weight:600">Today, 9:14 AM</span></div>
+                                <div style="display:flex;justify-content:space-between;font-size:13px"><span
+                                        style="color:#6b7280">Privacy score</span><span
+                                        style="color:#10b981;font-weight:700">98/100</span></div>
+                            </div>
+                        </div>
+                        <div class="tracker-card">
+                            <h3 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px">
+                                Quick Actions</h3>
+                            <div style="display:flex;flex-direction:column;gap:10px">
+                                <button onclick="showToast('✓ Vault export initiated')"
+                                    style="padding:12px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;display:flex;align-items:center;gap:10px;color:var(--ink)">📤
+                                    Export Encrypted Backup</button>
+                                <button onclick="showToast('✓ Vault audit complete — no issues found')"
+                                    style="padding:12px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;display:flex;align-items:center;gap:10px;color:var(--ink)">🔍
+                                    Run Security Audit</button>
+                                <button onclick="showToast('✓ Keys rotated successfully')"
+                                    style="padding:12px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;display:flex;align-items:center;gap:10px;color:var(--ink)">🔑
+                                    Rotate Encryption Keys</button>
+                                <button onclick="showToast('✓ Vault synced to edge node')"
+                                    style="padding:12px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;display:flex;align-items:center;gap:10px;color:var(--ink)">☁️
+                                    Sync to Edge Node</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tracker-card" id="vault-entries"></div>
+                </div>
+
+                <!-- CONNECTIONS -->
+                <div id="section-connections" class="dash-section" style="display:none">
+                    <div class="page-header-dash">
+                        <h1>Connections</h1>
+                        <p>Your trusted network — all contact data is encrypted</p>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px">
+                        <div class="tracker-card" style="text-align:center">
+                            <div
+                                style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:var(--accent)">
+                                142</div>
+                            <div style="font-size:13px;color:var(--muted);font-weight:600">TOTAL CONNECTIONS</div>
+                        </div>
+                        <div class="tracker-card" style="text-align:center">
+                            <div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#10b981">38
+                            </div>
+                            <div style="font-size:13px;color:var(--muted);font-weight:600">TRUSTED CONTACTS</div>
+                        </div>
+                        <div class="tracker-card" style="text-align:center">
+                            <div style="font-family:'Syne',sans-serif;font-size:36px;font-weight:800;color:#f59e0b">7
+                            </div>
+                            <div style="font-size:13px;color:var(--muted);font-weight:600">PENDING REQUESTS</div>
+                        </div>
+                    </div>
+                    <div class="tracker-card" id="connections-list"></div>
+                </div>
+
+                <!-- SETTINGS -->
+                <div id="section-settings" class="dash-section" style="display:none">
+                    <div class="page-header-dash">
+                        <h1>Settings</h1>
+                        <p>Manage your persona, account, and preferences</p>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+                        <div style="display:flex;flex-direction:column;gap:16px">
+                            <div class="tracker-card">
+                                <h3
+                                    style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px">
+                                    Profile Settings</h3>
+                                <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+                                    <div style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Syne',sans-serif;font-size:22px;font-weight:800"
+                                        id="settings-avatar">U</div>
+                                    <div>
+                                        <div style="font-weight:700;font-size:15px" id="settings-name">User</div>
+                                        <div style="font-size:13px;color:var(--muted)" id="settings-email">user@hushh.ai
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display:flex;flex-direction:column;gap:10px">
+                                    <button onclick="showToast('✓ Display name updated')"
+                                        style="padding:11px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;color:var(--ink)">✏️
+                                        Edit Display Name</button>
+                                    <button onclick="showToast('✓ Password reset email sent')"
+                                        style="padding:11px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;color:var(--ink)">🔑
+                                        Change Password</button>
+                                    <button onclick="showPage('onboarding-page')"
+                                        style="padding:11px 16px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;color:var(--ink)">🎭
+                                        Switch Persona Role</button>
+                                </div>
+                            </div>
+                            <div class="tracker-card">
+                                <h3
+                                    style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px">
+                                    Notification Preferences</h3>
+                                <div style="display:flex;flex-direction:column;gap:12px">
+                                    <div
+                                        style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:500">
+                                        <span>AI Suggestions</span><label class="switch"><input type="checkbox" checked
+                                                onchange="showToast('✓ AI Suggestions toggled')"><span
+                                                class="slider"></span></label></div>
+                                    <div
+                                        style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:500">
+                                        <span>Task Reminders</span><label class="switch"><input type="checkbox" checked
+                                                onchange="showToast('✓ Task Reminders toggled')"><span
+                                                class="slider"></span></label></div>
+                                    <div
+                                        style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:500">
+                                        <span>Security Alerts</span><label class="switch"><input type="checkbox" checked
+                                                onchange="showToast('✓ Security Alerts toggled')"><span
+                                                class="slider"></span></label></div>
+                                    <div
+                                        style="display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:500">
+                                        <span>Weekly Reports</span><label class="switch"><input type="checkbox"
+                                                onchange="showToast('✓ Weekly Reports toggled')"><span
+                                                class="slider"></span></label></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:16px">
+                            <div class="tracker-card">
+                                <h3
+                                    style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px">
+                                    Appearance</h3>
+                                <div style="display:flex;flex-direction:column;gap:12px">
+                                    <div style="display:flex;gap:10px">
+                                        <div onclick="showToast('✓ Light mode active')"
+                                            style="flex:1;padding:14px;border-radius:12px;border:2px solid var(--accent);background:#fff;text-align:center;cursor:pointer;font-size:13px;font-weight:600">
+                                            ☀️ Light</div>
+                                        <div onclick="showToast('✓ Dark mode coming soon')"
+                                            style="flex:1;padding:14px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface);text-align:center;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted)">
+                                            🌙 Dark</div>
+                                    </div>
+                                    <div
+                                        style="font-size:13px;color:var(--muted);padding:10px;background:var(--surface);border-radius:10px">
+                                        Language: English (US) · Timezone: Auto-detected</div>
+                                </div>
+                            </div>
+                            <div class="tracker-card">
+                                <h3
+                                    style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px">
+                                    Danger Zone</h3>
+                                <div style="display:flex;flex-direction:column;gap:10px">
+                                    <button onclick="showToast('✓ All data exported to encrypted file')"
+                                        style="padding:11px 16px;border-radius:10px;border:1.5px solid #fecaca;background:#fef2f2;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;color:#dc2626">⚠️
+                                        Export All My Data</button>
+                                    <button onclick="showToast('⚠ Account deletion requires email confirmation')"
+                                        style="padding:11px 16px;border-radius:10px;border:1.5px solid #fecaca;background:#fef2f2;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;text-align:left;color:#dc2626">🗑️
+                                        Delete Account</button>
+                                </div>
+                            </div>
+                            <div style="background:#0f0f1e;border-radius:16px;padding:20px;color:#fff">
+                                <div
+                                    style="font-size:11px;color:#6b7280;font-weight:700;letter-spacing:.07em;margin-bottom:8px">
+                                    PLAN</div>
+                                <div
+                                    style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:4px">
+                                    Free Sanctuary</div>
+                                <div style="font-size:13px;color:#9ca3af;margin-bottom:16px">Upgrade for unlimited
+                                    personas & priority AI</div>
+                                <button onclick="showToast('✓ Redirecting to upgrade page...')"
+                                    style="width:100%;padding:11px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">Upgrade
+                                    to Pro →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HELP -->
+                <div id="section-help" class="dash-section" style="display:none">
+                    <div class="page-header-dash">
+                        <h1>Help & Support</h1>
+                        <p>Everything you need to get the most out of Hushh</p>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px">
+                        <div class="tracker-card" style="cursor:pointer"
+                            onclick="showToast('✓ Opening: Getting Started')">
+                            <div style="font-size:28px;margin-bottom:12px">🚀</div>
+                            <h3 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">
+                                Getting Started</h3>
+                            <p style="font-size:13px;color:var(--muted);line-height:1.6">Learn the basics of personas,
+                                vaults, and privacy controls.</p>
+                            <div style="margin-top:12px;font-size:13px;color:var(--accent);font-weight:600">Read more →
+                            </div>
+                        </div>
+                        <div class="tracker-card" style="cursor:pointer"
+                            onclick="showToast('✓ Opening: Privacy Deep Dive')">
+                            <div style="font-size:28px;margin-bottom:12px">🔐</div>
+                            <h3 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">
+                                Privacy Deep Dive</h3>
+                            <p style="font-size:13px;color:var(--muted);line-height:1.6">Understand our zero-knowledge
+                                architecture in plain English.</p>
+                            <div style="margin-top:12px;font-size:13px;color:var(--accent);font-weight:600">Read more →
+                            </div>
+                        </div>
+                        <div class="tracker-card" style="cursor:pointer"
+                            onclick="showToast('✓ Opening: AI Persona Guide')">
+                            <div style="font-size:28px;margin-bottom:12px">🤖</div>
+                            <h3 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">
+                                AI Persona Guide</h3>
+                            <p style="font-size:13px;color:var(--muted);line-height:1.6">Configure your AI to match your
+                                personal style and goals.</p>
+                            <div style="margin-top:12px;font-size:13px;color:var(--accent);font-weight:600">Read more →
+                            </div>
+                        </div>
+                        <div class="tracker-card" style="cursor:pointer"
+                            onclick="showToast('✓ Opening: Contact Support')">
+                            <div style="font-size:28px;margin-bottom:12px">📞</div>
+                            <h3 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">
+                                Contact Support</h3>
+                            <p style="font-size:13px;color:var(--muted);line-height:1.6">Reach our encrypted support
+                                channel — response in 24h.</p>
+                            <div style="margin-top:12px;font-size:13px;color:var(--accent);font-weight:600">Read more →
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tracker-card">
+                        <h3 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:16px">
+                            Frequently Asked Questions</h3>
+                        <div style="display:flex;flex-direction:column;gap:10px" id="faq-list"></div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <footer>
+            <div class="footer-brand">Hushh Persona AI</div>
+            <div style="font-size:11px;color:#8888aa">© 2024 Hushh Persona AI. Your data. Your control.</div>
+            <div class="footer-links">
+                <a onclick="showPage('privacy-page')">Privacy Policy</a>
+                <a>Terms of Service</a>
+                <a>Security Whitepaper</a>
+                <a>Contact Support</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== PRIVACY PAGE ===== -->
+    <div id="privacy-page" class="page">
+        <nav>
+            <div class="nav-logo" onclick="showPage('landing-page')">Hushh Persona AI</div>
+            <div class="nav-links">
+                <a onclick="showPage('dashboard-page')">Dashboard</a>
+                <a class="active" onclick="showPage('privacy-page')">Privacy</a>
+                <a onclick="showPage('control-page')">Control</a>
+            </div>
+            <div class="nav-right">
+                <button class="btn-ghost" onclick="openSignoutModal()">Sign Out</button>
+                <button class="btn-primary">Manage</button>
+            </div>
+        </nav>
+
+        <main class="privacy-main">
+            <div class="privacy-hero-top">
+                <div class="hero-badge-p">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    PRIVACY CONTROL CENTER
+                </div>
+                <div class="privacy-title">Your Privacy,<br>Your Rules.</div>
+                <p class="privacy-sub">Every setting here is encrypted and stored only on your device. We can't read
+                    these. You're in full control.</p>
+            </div>
+
+            <div class="privacy-grid">
+                <div class="toggles-section">
+                    <div class="toggle-item">
+                        <div class="toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg></div>
+                        <div class="toggle-text">
+                            <h4>Guardian Mode</h4>
+                            <p>Obfuscates all behavioral signals using differential privacy. Prevents fingerprinting
+                                across sessions.</p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked
+                                onchange="togglePrivacy(this,'Guardian Mode')"><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-item">
+                        <div class="toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" />
+                                <path d="M7 11V7a5 5 0 0110 0v4" />
+                            </svg></div>
+                        <div class="toggle-text">
+                            <h4>End-to-End Encryption</h4>
+                            <p>All persona data is encrypted client-side before any sync. Keys never leave your device.
+                            </p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked
+                                onchange="togglePrivacy(this,'E2E Encryption')"><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-item">
+                        <div class="toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <circle cx="12" cy="12" r="10" />
+                                <path d="M12 8v4l3 3" />
+                            </svg></div>
+                        <div class="toggle-text">
+                            <h4>Usage Analytics</h4>
+                            <p>Share anonymized, aggregated usage data to help improve the platform. No PII is ever
+                                collected.</p>
+                        </div>
+                        <label class="switch"><input type="checkbox"
+                                onchange="togglePrivacy(this,'Usage Analytics')"><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-item">
+                        <div class="toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 00-3-3.87" />
+                                <path d="M16 3.13a4 4 0 010 7.75" />
+                            </svg></div>
+                        <div class="toggle-text">
+                            <h4>Social Persona Sharing</h4>
+                            <p>Allow controlled sharing of your professional persona with trusted connections.</p>
+                        </div>
+                        <label class="switch"><input type="checkbox"
+                                onchange="togglePrivacy(this,'Social Sharing')"><span class="slider"></span></label>
+                    </div>
+                    <div class="toggle-item">
+                        <div class="toggle-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                            </svg></div>
+                        <div class="toggle-text">
+                            <h4>Behavioral Learning</h4>
+                            <p>Enable the AI to learn from your patterns locally. All learning happens on-device only.
+                            </p>
+                        </div>
+                        <label class="switch"><input type="checkbox" checked
+                                onchange="togglePrivacy(this,'Behavioral Learning')"><span
+                                class="slider"></span></label>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="privacy-vault">
+                        <div class="vault-header">
+                            <div class="vault-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                    <path d="M7 11V7a5 5 0 0110 0v4" />
+                                </svg></div>
+                            <div>
+                                <h3>Data Vault Status</h3>
+                                <p style="font-size:12px;color:#6b7280;margin-top:2px">Last audit: Today</p>
+                            </div>
+                        </div>
+                        <div class="vault-stat">
+                            <div class="vault-stat-label">ENCRYPTED DATA POINTS</div>
+                            <div class="vault-stat-val">1,842</div>
+                            <div class="vault-bar">
+                                <div class="vault-bar-fill" style="width:73%"></div>
+                            </div>
+                        </div>
+                        <div class="vault-stat">
+                            <div class="vault-stat-label">PRIVACY SCORE</div>
+                            <div class="vault-stat-val" style="color:#10b981">98/100</div>
+                            <div class="vault-bar">
+                                <div class="vault-bar-fill"
+                                    style="width:98%;background:linear-gradient(90deg,#10b981,#06b6d4)"></div>
+                            </div>
+                        </div>
+                        <div class="vault-stat">
+                            <div class="vault-stat-label">BREACH ATTEMPTS BLOCKED</div>
+                            <div class="vault-stat-val" style="color:#f59e0b">7</div>
+                            <div class="vault-bar">
+                                <div class="vault-bar-fill"
+                                    style="width:15%;background:linear-gradient(90deg,#f59e0b,#ef4444)"></div>
+                            </div>
+                        </div>
+                        <button onclick="showToast('✓ Full audit report generated')"
+                            style="width:100%;margin-top:16px;padding:12px;background:rgba(99,102,241,.2);border:1.5px solid rgba(99,102,241,.4);border-radius:10px;color:#818cf8;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">View
+                            Full Audit Report</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div>
+                <div class="footer-brand">Hushh Persona AI</div>
+                <div class="footer-copy">© 2024 Hushh Persona AI. Your data. Your control.</div>
+            </div>
+            <div class="footer-links"><a>Privacy Policy</a><a>Terms of Service</a><a>Security Whitepaper</a><a>Contact
+                    Support</a></div>
+        </footer>
+    </div>
+
+    <!-- ===== CONTROL PAGE ===== -->
+    <div id="control-page" class="page">
+        <nav>
+            <div class="nav-logo" onclick="showPage('landing-page')">Hushh Persona AI</div>
+            <div class="nav-links">
+                <a onclick="showPage('dashboard-page')">Dashboard</a>
+                <a onclick="showPage('privacy-page')">Privacy</a>
+                <a class="active" onclick="showPage('control-page')">Control</a>
+            </div>
+            <div class="nav-right">
+                <button class="btn-ghost" onclick="openSignoutModal()">Sign Out</button>
+                <button class="btn-primary" onclick="showPage('onboarding-page')">+ New Persona</button>
+            </div>
+        </nav>
+
+        <main class="control-main">
+            <!-- Hero -->
+            <div class="control-hero">
+                <div
+                    style="display:inline-flex;align-items:center;gap:8px;background:#ede9fe;color:#5b21b6;font-size:11px;font-weight:700;letter-spacing:.08em;padding:7px 16px;border-radius:20px;margin-bottom:20px">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3" />
+                        <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14" />
+                    </svg>
+                    PERSONA CONTROL CENTER
+                </div>
+                <h1
+                    style="font-family:'Syne',sans-serif;font-size:46px;font-weight:800;line-height:1.08;margin-bottom:14px">
+                    Master Control<br><span style="color:var(--accent)">Panel</span></h1>
+                <p style="font-size:16px;color:var(--ink2);line-height:1.7;max-width:560px">Manage your AI agents, sync
+                    settings, active integrations, and real-time persona health — all in one command center.</p>
+            </div>
+
+            <!-- Status Bar -->
+            <div class="ctrl-status-bar">
+                <div class="ctrl-status-item">
+                    <div class="ctrl-status-dot green"></div>
+                    <span>System Online</span>
+                </div>
+                <div class="ctrl-status-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                    </svg>
+                    <span>Guardian Active</span>
+                </div>
+                <div class="ctrl-status-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                    </svg>
+                    <span id="ctrl-last-sync">Last Sync: Just now</span>
+                </div>
+                <div style="margin-left:auto">
+                    <button class="ctrl-sync-btn" id="ctrl-sync-btn" onclick="runSync()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M23 4v6h-6" />
+                            <path d="M1 20v-6h6" />
+                            <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15" />
+                        </svg>
+                        Sync Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Grid -->
+            <div class="ctrl-grid">
+
+                <!-- LEFT COLUMN -->
+                <div class="ctrl-col">
+
+                    <!-- Active Agents -->
+                    <div class="ctrl-card">
+                        <div class="ctrl-card-header">
+                            <h3>Active AI Agents</h3>
+                            <button class="ctrl-add-btn" onclick="addNewAgent()">+ Add Agent</button>
+                        </div>
+                        <div id="agents-list"></div>
+                    </div>
+
+                    <!-- Integrations -->
+                    <div class="ctrl-card">
+                        <div class="ctrl-card-header">
+                            <h3>Integrations</h3>
+                            <span class="ctrl-badge" id="integrations-badge">3 Active</span>
+                        </div>
+                        <div id="integrations-list"></div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="ctrl-col">
+
+                    <!-- Persona Health -->
+                    <div class="ctrl-card" style="background:#0f0f1e;color:#fff;border-color:rgba(99,102,241,.2)">
+                        <div class="ctrl-card-header" style="border-bottom-color:rgba(255,255,255,.06)">
+                            <h3 style="color:#fff">Persona Health</h3>
+                            <div
+                                style="font-size:12px;color:#10b981;font-weight:700;display:flex;align-items:center;gap:5px">
+                                <span
+                                    style="width:7px;height:7px;background:#10b981;border-radius:50%;display:inline-block"></span>OPTIMAL
+                            </div>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px" id="health-bars"></div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px">
+                            <div
+                                style="background:rgba(255,255,255,.05);border-radius:10px;padding:14px;text-align:center">
+                                <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#818cf8"
+                                    id="persona-count">3</div>
+                                <div style="font-size:11px;color:#6b7280;margin-top:3px">PERSONAS</div>
+                            </div>
+                            <div
+                                style="background:rgba(255,255,255,.05);border-radius:10px;padding:14px;text-align:center">
+                                <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#10b981"
+                                    id="agents-live-count">7</div>
+                                <div style="font-size:11px;color:#6b7280;margin-top:3px">AGENTS LIVE</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Controls -->
+                    <div class="ctrl-card">
+                        <div class="ctrl-card-header">
+                            <h3>Quick Controls</h3>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                            <button class="ctrl-quick-btn" onclick="pauseAllAgents()"><span style="font-size:20px"
+                                    id="pause-icon">⏸</span><span id="pause-label">Pause All Agents</span></button>
+                            <button class="ctrl-quick-btn" onclick="restartSystem()"><span
+                                    style="font-size:20px">🔄</span><span>Restart System</span></button>
+                            <button class="ctrl-quick-btn" onclick="emergencyLock()"><span style="font-size:20px"
+                                    id="lock-icon">🔒</span><span id="lock-label">Emergency Lock</span></button>
+                            <button class="ctrl-quick-btn" onclick="runDiagnostics()"><span
+                                    style="font-size:20px">📋</span><span>Run Diagnostics</span></button>
+                            <button class="ctrl-quick-btn" onclick="cloudBackup()"><span
+                                    style="font-size:20px">☁️</span><span>Cloud Backup</span></button>
+                            <button class="ctrl-quick-btn" onclick="clearSession()"><span
+                                    style="font-size:20px">🧹</span><span>Clear Session</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Activity Log -->
+                    <div class="ctrl-card">
+                        <div class="ctrl-card-header">
+                            <h3>Activity Log</h3>
+                            <button onclick="exportLog()"
+                                style="font-size:12px;color:var(--accent);font-weight:600;background:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif">Export</button>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:0" id="activity-log"></div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div>
+                <div class="footer-brand">Hushh Persona AI</div>
+                <div class="footer-copy">© 2024 Hushh Persona AI. Your data. Your control.</div>
+            </div>
+            <div class="footer-links">
+                <a onclick="showPage('privacy-page')">Privacy Policy</a>
+                <a>Terms of Service</a>
+                <a>Security Whitepaper</a>
+                <a>Contact Support</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <div class="toast-icon" id="toast-icon">✓</div>
+        <span id="toast-msg">Action completed</span>
+    </div>
+
+    <!-- ===== SIGNOUT MODAL ===== -->
+    <div class="modal-overlay" id="signout-modal">
+        <div class="modal">
+            <h3>Sign Out?</h3>
+            <p>Your encrypted persona will remain safely stored. You can sign back in anytime to pick up where you left
+                off.</p>
+            <div class="modal-btns">
+                <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+                <button class="modal-confirm" onclick="signOut()">Yes, Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== STATE =====
+        const state = {
+            isAuthenticated: false,
+            user: null,
+            selectedRole: 'Student',
+            selectedStyle: 'Goal-Oriented',
+            agentsPaused: false,
+            locked: false,
+            agents: [
+                { icon: '🎓', name: 'Study Coach', desc: 'Tracks modules & deadlines', status: 'active' },
+                { icon: '📧', name: 'Email Agent', desc: 'Filters & drafts messages', status: 'active' },
+                { icon: '🔐', name: 'Privacy Guardian', desc: 'Monitors data exposure', status: 'active' },
+                { icon: '📊', name: 'Analytics Bot', desc: 'Collects usage patterns', status: 'idle' },
+                { icon: '🤝', name: 'Social Agent', desc: 'Manages connections', status: 'paused' },
+            ],
+            integrations: [
+                { icon: '📞', iconBg: '#f0f4ff', iconColor: '#4f46e5', name: 'Voice Assistant', desc: 'Always-on voice sync', on: true },
+                { icon: '📧', iconBg: '#f0fdf4', iconColor: '#10b981', name: 'Email Persona Agent', desc: 'Auto-draft & filter emails', on: true },
+                { icon: '💬', iconBg: '#fff7ed', iconColor: '#f59e0b', name: 'Chat Summarizer', desc: 'Digest long conversations', on: true },
+                { icon: '🔔', iconBg: '#fdf2f8', iconColor: '#a855f7', name: 'Smart Notifications', desc: 'AI-filtered alerts only', on: false },
+            ],
+            log: [
+                { color: '#10b981', msg: 'Guardian Mode synced successfully', time: 'Just now' },
+                { color: '#6366f1', msg: 'Study Coach completed daily brief', time: '3 min ago' },
+                { color: '#f59e0b', msg: 'Email Agent flagged 2 phishing attempts', time: '8 min ago' },
+                { color: '#06b6d4', msg: 'Vault backup completed (4.2 MB)', time: '14 min ago' },
+                { color: '#10b981', msg: 'Privacy score updated: 98/100', time: '1 hr ago' },
+                { color: '#ef4444', msg: 'Breach attempt #7 blocked', time: '2 hr ago' },
+            ]
+        };
+
+        // ===== NAVIGATION =====
+        function showPage(pageId) {
+            const protectedPages = ['dashboard-page', 'privacy-page', 'onboarding-page', 'control-page'];
+            if (protectedPages.includes(pageId) && !state.isAuthenticated) {
+                _goToPage('login-page');
+                showToast('Please sign in first', true);
+                return;
+            }
+            _goToPage(pageId);
+            if (pageId === 'control-page') renderControlPage();
+        }
+
+        function _goToPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const page = document.getElementById(pageId);
+            if (page) page.classList.add('active');
+            updateNavActive(pageId);
+            window.scrollTo(0, 0);
+        }
+
+        function updateNavActive(pageId) {
+            const navMap = { 'landing-page': 'Dashboard', 'dashboard-page': 'Dashboard', 'privacy-page': 'Privacy', 'control-page': 'Control' };
+            const activeLabel = navMap[pageId] || '';
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.toggle('active', a.textContent.trim() === activeLabel);
+            });
+        }
+
+        function requireAuth(pageId) {
+            if (!state.isAuthenticated) { _goToPage('login-page'); showToast('Please sign in first', true); }
+            else showPage(pageId);
+        }
+
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('landing-page').classList.add('active');
+
+        // ===== AUTH =====
+        function validateEmail(email) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+
+        function handleSignin() {
+            const email = document.getElementById('signin-email').value.trim();
+            const password = document.getElementById('signin-password').value;
+            const errEl = document.getElementById('signin-error');
+            const sucEl = document.getElementById('signin-success');
+            errEl.style.display = 'none'; sucEl.style.display = 'none';
+            if (!email || !password) { errEl.textContent = 'Please fill in all fields.'; errEl.style.display = 'block'; return; }
+            if (!validateEmail(email)) { errEl.textContent = 'Please enter a valid email address.'; errEl.style.display = 'block'; return; }
+            const users = JSON.parse(localStorage.getItem('hushh_users') || '[]');
+            const user = users.find(u => u.email === email && u.password === btoa(password));
+            if (!user) {
+                if (email === 'demo@hushh.ai' && password === 'demo1234') { loginSuccess({ name: 'Demo User', email, role: 'Student', style: 'Goal-Oriented' }); return; }
+                errEl.textContent = 'Invalid email or password. Try demo@hushh.ai / demo1234';
+                errEl.style.display = 'block'; return;
+            }
+            loginSuccess(user);
+        }
+
+        function loginSuccess(user) {
+            state.isAuthenticated = true;
+            state.user = user;
+            document.getElementById('signin-success').style.display = 'block';
+            document.getElementById('signin-error').style.display = 'none';
+            const name = user.name ? user.name.split(' ')[0] : 'User';
+            document.getElementById('dash-greeting').textContent = `Welcome back, ${name} 👋`;
+            setTimeout(() => { if (!user.onboarded) _goToPage('onboarding-page'); else showLoading(); }, 800);
+        }
+
+        function handleSignup() {
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            const errEl = document.getElementById('signup-error');
+            const sucEl = document.getElementById('signup-success');
+            errEl.style.display = 'none'; sucEl.style.display = 'none';
+            if (!name || !email || !password || !confirm) { errEl.textContent = 'All fields are required.'; errEl.style.display = 'block'; return; }
+            if (name.length < 2) { errEl.textContent = 'Name must be at least 2 characters.'; errEl.style.display = 'block'; return; }
+            if (!validateEmail(email)) { errEl.textContent = 'Please enter a valid email address.'; errEl.style.display = 'block'; return; }
+            if (password.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
+            if (password !== confirm) { errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; return; }
+            const users = JSON.parse(localStorage.getItem('hushh_users') || '[]');
+            if (users.find(u => u.email === email)) { errEl.textContent = 'An account with this email already exists.'; errEl.style.display = 'block'; return; }
+            const newUser = { name, email, password: btoa(password), role: 'Student', style: 'Goal-Oriented', onboarded: false };
+            users.push(newUser); localStorage.setItem('hushh_users', JSON.stringify(users));
+            sucEl.textContent = '✓ Account created! Setting up your sanctuary...'; sucEl.style.display = 'block';
+            state.isAuthenticated = true; state.user = newUser;
+            setTimeout(() => _goToPage('onboarding-page'), 900);
+        }
+
+        function switchTab(mode) {
+            document.getElementById('signin-tab').classList.toggle('active', mode === 'signin');
+            document.getElementById('signup-tab').classList.toggle('active', mode === 'signup');
+            document.getElementById('signin-form').style.display = mode === 'signin' ? 'block' : 'none';
+            document.getElementById('signup-form').style.display = mode === 'signup' ? 'block' : 'none';
+            ['signin-error', 'signup-error', 'signin-success', 'signup-success'].forEach(id => { document.getElementById(id).style.display = 'none'; });
+        }
+
+        function forgotPassword() {
+            const email = document.getElementById('signin-email').value.trim();
+            if (!email) { showToast('Enter your email first', true); return; }
+            showToast('✓ Password reset link sent to ' + email);
+        }
+
+        // ===== ONBOARDING =====
+        function selectRole(card, role) { document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); state.selectedRole = role; }
+        function selectStyle(card, style) { document.querySelectorAll('.style-card').forEach(c => c.classList.remove('selected')); card.classList.add('selected'); state.selectedStyle = style; }
+
+        function completeOnboarding() {
+            if (state.user) {
+                const users = JSON.parse(localStorage.getItem('hushh_users') || '[]');
+                const idx = users.findIndex(u => u.email === state.user.email);
+                if (idx > -1) { users[idx].role = state.selectedRole; users[idx].style = state.selectedStyle; users[idx].onboarded = true; localStorage.setItem('hushh_users', JSON.stringify(users)); state.user = users[idx]; }
+                const name = state.user.name ? state.user.name.split(' ')[0] : 'User';
+                document.getElementById('dash-greeting').textContent = `Welcome, ${name} 👋`;
+                updateAISuggestion(state.selectedRole, state.selectedStyle);
+            }
+            showLoading();
+        }
+
+        function updateAISuggestion(role, style) {
+            const sug = { 'Student': '"Focus time detected. Your next module is ready to start."', 'Developer': '"Your API quota refreshes in 2h. Consider optimizing batch calls."', 'Professional': '"3 unread insights in your growth dashboard. Review now?"', 'Customer': '"2 personalized deals match your secure preferences today."' };
+            const el = document.getElementById('ai-suggestion-text');
+            if (el) el.textContent = sug[role] || sug['Student'];
+        }
+
+        // ===== LOADING =====
+        function showLoading() {
+            _goToPage('loading-page');
+            const fill = document.getElementById('loading-fill');
+            const status = document.getElementById('loading-status');
+            const steps = [{ pct: 25, msg: 'Generating encryption keys...', card: 'sc1' }, { pct: 55, msg: 'Training local AI persona model...', card: 'sc2' }, { pct: 80, msg: 'Activating Guardian Mode...', card: 'sc3' }, { pct: 100, msg: 'Sanctuary ready!', card: null }];
+            let i = 0;
+            function next() {
+                if (i >= steps.length) { setTimeout(() => _goToPage('dashboard-page'), 600); return; }
+                const s = steps[i++];
+                fill.style.width = s.pct + '%'; status.textContent = s.msg;
+                if (s.card) document.getElementById(s.card).classList.add('done');
+                setTimeout(next, 900);
+            }
+            setTimeout(next, 400);
+        }
+
+        // ===== DASHBOARD HELPERS =====
+        function buildChart(data, labels) {
+            const chart = document.getElementById('chart'); const labelsEl = document.getElementById('bar-labels');
+            if (!chart) return;
+            chart.innerHTML = ''; labelsEl.innerHTML = '';
+            const max = Math.max(...data);
+            data.forEach((h, i) => {
+                const isActive = h === max; const wrap = document.createElement('div'); wrap.className = 'bar-wrap';
+                const bar = document.createElement('div'); bar.className = 'bar' + (isActive ? ' bar-active' : '');
+                bar.style.height = (h / max * 90) + 'px'; wrap.appendChild(bar); chart.appendChild(wrap);
+                const lbl = document.createElement('span'); lbl.style.cssText = 'font-size:10px;color:' + (isActive ? '#4f46e5' : '#8888aa') + ';font-weight:' + (isActive ? '700' : '400');
+                lbl.textContent = labels[i]; labelsEl.appendChild(lbl);
+            });
+        }
+
+        const weekData = { data: [40, 55, 85, 60, 70, 30, 20], labels: ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'], hours: '24.5h', prod: '+12%' };
+        const monthData = { data: [60, 40, 80, 55, 90, 70, 45, 65, 50, 75, 85, 95], labels: ['W1', '', 'W2', '', 'W3', '', 'W4', '', 'W5', '', 'W6', ''], hours: '98h', prod: '+18%' };
+        buildChart(weekData.data, weekData.labels);
+
+        function setPeriod(btn, period) {
+            document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+            const d = period === 'week' ? weekData : monthData; buildChart(d.data, d.labels);
+            document.getElementById('focus-hours').textContent = d.hours; document.getElementById('productivity').textContent = d.prod;
+        }
+
+        function switchSection(name, item) {
+            document.querySelectorAll('.sidebar .nav-item').forEach(n => n.classList.remove('active')); item.classList.add('active');
+            document.querySelectorAll('.dash-section').forEach(s => s.style.display = 'none');
+            const target = document.getElementById('section-' + name); if (target) target.style.display = 'block';
+            const main = document.getElementById('dash-main-area'); if (main) main.scrollTop = 0;
+            if (name === 'overview') buildChart(weekData.data, weekData.labels);
+            if (name === 'insights') buildMasteryBars();
+            if (name === 'vault') buildVaultEntries();
+            if (name === 'connections') buildConnectionsList();
+            if (name === 'help') buildFAQ();
+            if (name === 'settings' && state.user) {
+                const n = document.getElementById('settings-name'); const e = document.getElementById('settings-email'); const av = document.getElementById('settings-avatar');
+                if (n) n.textContent = state.user.name || 'User'; if (e) e.textContent = state.user.email || ''; if (av) av.textContent = (state.user.name || 'U')[0].toUpperCase();
+            }
+        }
+
+        function buildMasteryBars() {
+            const el = document.getElementById('mastery-bars'); if (!el) return;
+            const topics = [['Cryptography', 82, 'var(--accent)'], ['Neural Networks', 67, '#10b981'], ['Privacy Protocols', 91, '#06b6d4'], ['Zero-Knowledge Proofs', 45, '#f59e0b'], ['Differential Privacy', 73, '#7c3aed']];
+            el.innerHTML = topics.map(([t, pct, col]) => `<div><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:6px"><span>${t}</span><span style="color:${col}">${pct}%</span></div><div style="height:8px;background:#e0e7ff;border-radius:4px;overflow:hidden"><div style="height:100%;width:${pct}%;background:${col};border-radius:4px;transition:.6s"></div></div></div>`).join('');
+        }
+
+        function buildVaultEntries() {
+            const el = document.getElementById('vault-entries'); if (!el) return;
+            const entries = [['🎓', 'Academic Records', 'GPA, transcripts, certifications', '2 min ago'], ['💼', 'Professional Profile', 'Resume, portfolio, references', '1 hr ago'], ['🔗', 'Social Connections', '142 encrypted contact cards', 'Today'], ['📊', 'Behavioral Patterns', 'On-device only, never synced', 'Live'], ['🛡️', 'Privacy Preferences', 'Guardian mode config', 'Today']];
+            el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h3 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700">Vault Entries</h3><span style="font-size:12px;color:var(--muted)">All encrypted · Read-only preview</span></div><div style="display:flex;flex-direction:column;gap:10px">${entries.map(([icon, title, desc, time]) => `<div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--surface);border-radius:12px"><div style="font-size:20px">${icon}</div><div style="flex:1"><div style="font-size:13px;font-weight:600">${title}</div><div style="font-size:12px;color:var(--muted)">${desc}</div></div><div style="font-size:11px;color:var(--muted)">${time}</div><div style="font-size:11px;font-weight:700;color:#10b981;background:#f0fdf4;padding:3px 8px;border-radius:6px">🔒 ENC</div></div>`).join('')}</div>`;
+        }
+
+        function buildConnectionsList() {
+            const el = document.getElementById('connections-list'); if (!el) return;
+            const conns = [['A', 'Alex R.', 'Research Partner', 'Online now', '#6366f1'], ['S', 'Sam K.', 'Study Group Lead', '2h ago', '#10b981'], ['M', 'Maya L.', 'Lab Partner', 'Yesterday', '#f59e0b'], ['J', 'Jordan T.', 'Peer Reviewer', '3 days ago', '#06b6d4'], ['P', 'Priya N.', 'Academic Advisor', '1 week ago', '#7c3aed']];
+            el.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><h3 style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700">Recent Connections</h3><button onclick="showToast('✓ New connection request sent')" style="padding:8px 16px;border-radius:9px;background:var(--accent);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif">+ Add Connection</button></div><div style="display:flex;flex-direction:column;gap:10px">${conns.map(([init, name, role, time, col]) => `<div style="display:flex;align-items:center;gap:14px;padding:12px 16px;background:var(--surface);border-radius:12px"><div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,${col},${col}99);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0">${init}</div><div style="flex:1"><div style="font-size:13px;font-weight:600">${name}</div><div style="font-size:12px;color:var(--muted)">${role}</div></div><div style="font-size:11px;color:var(--muted)">${time}</div><button onclick="showToast('✓ Message sent to ${name}')" style="padding:6px 12px;border-radius:8px;border:1.5px solid var(--border);background:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--ink)">Message</button></div>`).join('')}</div>`;
+        }
+
+        function buildFAQ() {
+            const el = document.getElementById('faq-list'); if (!el) return;
+            const faqs = [['Can Hushh AI see my data?', 'No. Our servers are zero-knowledge. All encryption happens client-side before any sync occurs.'], ['What happens if I lose my device?', 'Your vault can be restored from your encrypted backup using your recovery phrase. Never share this phrase.'], ['How is my persona different from a profile?', 'A persona is a dynamic, AI-learned model of you that updates in real time — a profile is just static data.'], ['Can I have multiple personas?', 'Yes! You can create separate personas for work, social, and personal contexts, each with its own privacy rules.']];
+            el.innerHTML = faqs.map(([q, a], i) => `<div style="border:1px solid var(--border);border-radius:12px;overflow:hidden"><div onclick="toggleFaq(${i})" style="padding:14px 16px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:14px;font-weight:600"><span>${q}</span><span id="faq-icon-${i}" style="color:var(--muted);font-size:18px">+</span></div><div id="faq-ans-${i}" style="display:none;padding:0 16px 14px;font-size:13px;color:var(--ink2);line-height:1.6">${a}</div></div>`).join('');
+        }
+
+        function toggleFaq(i) {
+            const ans = document.getElementById('faq-ans-' + i); const icon = document.getElementById('faq-icon-' + i);
+            if (!ans) return; const open = ans.style.display === 'block'; ans.style.display = open ? 'none' : 'block'; icon.textContent = open ? '+' : '−';
+        }
+
+        // ===== CONTROL PAGE =====
+        function renderControlPage() {
+            renderAgents();
+            renderIntegrations();
+            renderHealthBars();
+            renderActivityLog();
+        }
+
+        function renderAgents() {
+            const el = document.getElementById('agents-list'); if (!el) return;
+            el.innerHTML = state.agents.map((a, i) => `
+    <div class="ctrl-agent-item">
+      <div class="ctrl-agent-icon" style="background:var(--surface)">${a.icon}</div>
+      <div class="ctrl-agent-info">
+        <h5>${a.name}</h5>
+        <span>${a.desc}</span>
+      </div>
+      <span class="ctrl-agent-status ${a.status}">${a.status.charAt(0).toUpperCase() + a.status.slice(1)}</span>
+      <button onclick="toggleAgent(${i})" style="margin-left:8px;padding:5px 10px;border-radius:7px;border:1.5px solid var(--border);background:none;font-size:11px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;color:var(--ink2);transition:.2s">${a.status === 'active' ? 'Pause' : 'Resume'}</button>
+    </div>
+  `).join('');
+            document.getElementById('agents-live-count').textContent = state.agents.filter(a => a.status === 'active').length;
+        }
+
+        function toggleAgent(i) {
+            const a = state.agents[i];
+            a.status = a.status === 'active' ? 'paused' : 'active';
+            addLogEntry(a.status === 'active' ? '#10b981' : '#f59e0b', `${a.name} ${a.status === 'active' ? 'resumed' : 'paused'}`);
+            showToast(`✓ ${a.name} ${a.status === 'active' ? 'resumed' : 'paused'}`);
+            renderAgents();
+        }
+
+        function addNewAgent() {
+            const names = ['Memory Agent', 'Search Agent', 'Calendar Agent', 'Finance Agent', 'Health Agent'];
+            const icons = ['🧠', '🔍', '📅', '💰', '💪'];
+            const r = Math.floor(Math.random() * names.length);
+            state.agents.push({ icon: icons[r], name: names[r], desc: 'Newly configured agent', status: 'idle' });
+            addLogEntry('#06b6d4', `New agent added: ${names[r]}`);
+            showToast(`✓ ${names[r]} added`);
+            renderAgents();
+        }
+
+        function renderIntegrations() {
+            const el = document.getElementById('integrations-list'); if (!el) return;
+            el.innerHTML = state.integrations.map((intg, i) => `
+    <div class="ctrl-integration-item">
+      <div class="ctrl-int-icon" style="background:${intg.iconBg}">
+        <span style="font-size:18px">${intg.icon}</span>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:600">${intg.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${intg.desc}</div>
+      </div>
+      <label class="switch"><input type="checkbox" ${intg.on ? 'checked' : ''} onchange="toggleIntegration(${i},this)"><span class="slider"></span></label>
+    </div>
+  `).join('');
+            updateIntegrationsBadge();
+        }
+
+        function toggleIntegration(i, el) {
+            state.integrations[i].on = el.checked;
+            const name = state.integrations[i].name;
+            addLogEntry(el.checked ? '#10b981' : '#9ca3af', `${name} ${el.checked ? 'enabled' : 'disabled'}`);
+            showToast(`✓ ${name} ${el.checked ? 'enabled' : 'disabled'}`);
+            updateIntegrationsBadge();
+        }
+
+        function updateIntegrationsBadge() {
+            const count = state.integrations.filter(i => i.on).length;
+            const el = document.getElementById('integrations-badge'); if (el) el.textContent = `${count} Active`;
+        }
+
+        function renderHealthBars() {
+            const el = document.getElementById('health-bars'); if (!el) return;
+            const metrics = [
+                { label: 'AI Accuracy', val: 94, gradient: '#6366f1,#06b6d4' },
+                { label: 'Data Sync', val: 100, gradient: '#10b981,#06b6d4' },
+                { label: 'Memory Usage', val: 42, gradient: '#f59e0b,#ef4444' },
+                { label: 'Privacy Score', val: 98, gradient: '#10b981,#06b6d4', color: '#10b981' },
+            ];
+            el.innerHTML = metrics.map(m => `
+    <div class="ctrl-health-row">
+      <span style="color:#9ca3af;font-size:13px;width:110px;flex-shrink:0">${m.label}</span>
+      <div style="flex:1;margin:0 12px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${m.val}%;background:linear-gradient(90deg,${m.gradient});border-radius:3px;transition:.6s"></div>
+      </div>
+      <span style="color:${m.color || '#fff'};font-size:13px;font-weight:700">${m.label === 'Privacy Score' ? m.val + '/100' : m.val + '%'}</span>
+    </div>
+  `).join('');
+        }
+
+        function renderActivityLog() {
+            const el = document.getElementById('activity-log'); if (!el) return;
+            el.innerHTML = state.log.map(entry => `
+    <div class="ctrl-log-item">
+      <div class="ctrl-log-dot" style="background:${entry.color}"></div>
+      <div style="flex:1;font-size:13px;color:var(--ink)">${entry.msg}</div>
+      <div class="ctrl-log-time">${entry.time}</div>
+    </div>
+  `).join('');
+        }
+
+        function addLogEntry(color, msg) {
+            state.log.unshift({ color, msg, time: 'Just now' });
+            if (state.log.length > 10) state.log.pop();
+            renderActivityLog();
+        }
+
+        // Quick Controls
+        function pauseAllAgents() {
+            state.agentsPaused = !state.agentsPaused;
+            state.agents.forEach(a => a.status = state.agentsPaused ? 'paused' : 'active');
+            document.getElementById('pause-icon').textContent = state.agentsPaused ? '▶' : '⏸';
+            document.getElementById('pause-label').textContent = state.agentsPaused ? 'Resume All' : 'Pause All Agents';
+            addLogEntry(state.agentsPaused ? '#f59e0b' : '#10b981', state.agentsPaused ? 'All agents paused' : 'All agents resumed');
+            showToast(state.agentsPaused ? '⏸ All agents paused' : '▶ All agents resumed');
+            renderAgents();
+        }
+
+        function restartSystem() {
+            showToast('🔄 System restart initiated...');
+            addLogEntry('#06b6d4', 'System restart initiated');
+            const fill = document.getElementById('loading-fill');
+            setTimeout(() => { _goToPage('loading-page'); showLoading(); }, 600);
+        }
+
+        function emergencyLock() {
+            state.locked = !state.locked;
+            document.getElementById('lock-icon').textContent = state.locked ? '🔓' : '🔒';
+            document.getElementById('lock-label').textContent = state.locked ? 'Unlock System' : 'Emergency Lock';
+            addLogEntry(state.locked ? '#ef4444' : '#10b981', state.locked ? 'Emergency lock activated' : 'System unlocked');
+            showToast(state.locked ? '🔒 Emergency lock activated!' : '🔓 System unlocked');
+        }
+
+        function runDiagnostics() {
+            showToast('📋 Running diagnostics...');
+            addLogEntry('#818cf8', 'Diagnostics completed — no issues found');
+            setTimeout(() => showToast('✅ Diagnostics complete — all systems normal'), 1400);
+        }
+
+        function cloudBackup() {
+            showToast('☁️ Backup in progress...');
+            addLogEntry('#06b6d4', 'Cloud backup started');
+            setTimeout(() => { addLogEntry('#10b981', 'Cloud backup completed successfully'); showToast('✓ Cloud backup complete'); }, 1800);
+        }
+
+        function clearSession() {
+            showToast('🧹 Session data cleared');
+            addLogEntry('#9ca3af', 'Session memory cleared');
+        }
+
+        function exportLog() {
+            showToast('✓ Activity log exported to encrypted file');
+            addLogEntry('#06b6d4', 'Activity log exported');
+        }
+
+        function runSync() {
+            const btn = document.getElementById('ctrl-sync-btn');
+            btn.classList.add('spinning');
+            btn.disabled = true;
+            setTimeout(() => {
+                btn.classList.remove('spinning');
+                btn.disabled = false;
+                const now = new Date();
+                const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                document.getElementById('ctrl-last-sync').textContent = `Last Sync: ${time}`;
+                addLogEntry('#10b981', 'Manual sync completed successfully');
+                showToast('✓ Sync complete');
+            }, 1500);
+        }
+
+        // ===== PRIVACY =====
+        function togglePrivacy(input, featureName) { showToast('✓ ' + featureName + ' ' + (input.checked ? 'enabled' : 'disabled')); }
+
+        // ===== MODAL / SIGNOUT =====
+        function openSignoutModal() { document.getElementById('signout-modal').classList.add('open'); }
+        function closeModal() { document.getElementById('signout-modal').classList.remove('open'); }
+        function signOut() {
+            state.isAuthenticated = false; state.user = null; closeModal();
+            ['signin-email', 'signin-password', 'signup-name', 'signup-email', 'signup-password', 'signup-confirm'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+            document.getElementById('signin-error').style.display = 'none';
+            document.getElementById('signin-success').style.display = 'none';
+            _goToPage('landing-page'); showToast('✓ Signed out securely');
+        }
+
+        // ===== TOAST =====
+        let toastTimer;
+        function showToast(msg, isErr = false) {
+            const toast = document.getElementById('toast'); const icon = document.getElementById('toast-icon'); const msgEl = document.getElementById('toast-msg');
+            icon.className = 'toast-icon' + (isErr ? ' err' : ''); icon.textContent = isErr ? '✕' : '✓'; msgEl.textContent = msg;
+            toast.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        document.getElementById('signout-modal').addEventListener('click', function (e) { if (e.target === this) closeModal(); });
+        document.getElementById('signin-password')?.addEventListener('keydown', e => { if (e.key === 'Enter') handleSignin(); });
+        document.getElementById('signup-confirm')?.addEventListener('keydown', e => { if (e.key === 'Enter') handleSignup(); });
+    </script>
+</body>
+
+</html>

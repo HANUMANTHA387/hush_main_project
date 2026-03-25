@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Drop-Off Intelligence</title>
+    <meta name="description" content="AI-Powered Drop-Off Detection & User Lifecycle Intelligence System">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i data-lucide="zap"></i>
+                </div>
+                <span class="logo-text">Pulse AI</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <div class="nav-group">
+                    <span class="nav-group-title">Analytics</span>
+                    <a href="#" class="nav-item active" data-target="dashboard"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+                    <a href="#" class="nav-item" data-target="live-funnel"><i data-lucide="filter"></i> Live Funnel</a>
+                    <a href="#" class="nav-item" data-target="dropoff-flow"><i data-lucide="activity"></i> Drop-off Flow</a>
+                </div>
+                
+                <div class="nav-group">
+                    <span class="nav-group-title">Users</span>
+                    <a href="#" class="nav-item" data-target="sessions"><i data-lucide="users"></i> Sessions</a>
+                    <a href="#" class="nav-item" data-target="high-risk"><i data-lucide="alert-triangle"></i> High Risk</a>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="system-status">
+                    <div class="status-indicator">
+                        <span class="pulse-dot"></span>
+                        <span class="status-text">System Optimal</span>
+                    </div>
+                </div>
+                <a href="#" class="nav-item"><i data-lucide="settings"></i> Settings</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="topbar">
+                <div class="page-header">
+                    <h1 id="header-title">Dashboard</h1>
+                    <p>Monitoring user onboarding and active sessions in real-time.</p>
+                </div>
+                <div class="topbar-right">
+                    <div class="live-badge">
+                        <span class="recording-dot"></span>
+                        <span>LIVE TRACKING</span>
+                    </div>
+                    <button class="icon-btn"><i data-lucide="bell"></i></button>
+                    <div class="user-profile">
+                        <img src="https://ui-avatars.com/api/?name=Admin&background=8B5CF6&color=fff&rounded=true" alt="Admin">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                
+                <!-- Key Metrics -->
+                <div class="metric-card">
+                    <div class="metric-icon bg-cyan">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <div class="metric-content">
+                        <span class="metric-label">Active Funnel Users</span>
+                        <div class="metric-value-row">
+                            <span class="metric-value" id="val-active-users">2,419</span>
+                            <span class="metric-trend pos"><i data-lucide="trending-up"></i> 12%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon bg-rose">
+                        <i data-lucide="user-minus"></i>
+                    </div>
+                    <div class="metric-content">
+                        <span class="metric-label">Drop-off Rate</span>
+                        <div class="metric-value-row">
+                            <span class="metric-value" id="val-dropoff">34.2%</span>
+                            <span class="metric-trend neg"><i data-lucide="trending-down"></i> 2.4%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-icon bg-emerald">
+                        <i data-lucide="check-circle-2"></i>
+                    </div>
+                    <div class="metric-content">
+                        <span class="metric-label">Conversion Rate</span>
+                        <div class="metric-value-row">
+                            <span class="metric-value" id="val-conversion">65.8%</span>
+                            <span class="metric-trend pos"><i data-lucide="trending-up"></i> 4.1%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 1. Live Funnel Tracking (Primary Focus - Full Width) -->
+                <div class="widget funnel-widget col-span-4">
+                    <div class="widget-header">
+                        <h2>Live Onboarding Funnel</h2>
+                        <div class="widget-actions">
+                            <button class="btn-secondary btn-sm">Today <i data-lucide="chevron-down"></i></button>
+                        </div>
+                    </div>
+                    <div class="funnel-container" id="funnel-container">
+                        <!-- populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 5. Prediction Panel (High Risk Sessions) -->
+                <div class="widget table-widget col-span-2 row-span-2">
+                    <div class="widget-header">
+                        <h2>Prediction Panel (Churn Risk)</h2>
+                        <button class="btn-primary btn-sm">View All Users</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>User Session</th>
+                                    <th>Current Step</th>
+                                    <th>Time Logged</th>
+                                    <th>Risk % (ML Predict)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sessions-table-body">
+                                <!-- populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 6. Insight Panel (Root Cause) -->
+                <div class="widget ai-widget row-span-1">
+                    <div class="widget-header ai-header">
+                        <h2><i data-lucide="brain-circuit" class="ai-sparkle"></i> Root Cause Insights</h2>
+                    </div>
+                    <div class="ai-insights-list" id="ai-insights-list">
+                        <!-- populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 7. Recommendation Panel (Actionable Fixes) -->
+                <div class="widget ai-widget row-span-1">
+                    <div class="widget-header ai-header">
+                        <h2><i data-lucide="lightbulb" style="color:#F59E0B"></i> Recommendations</h2>
+                    </div>
+                    <div class="recommendations-list" id="recommendations-list">
+                        <!-- populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 3. Time-Based Analysis -->
+                <div class="widget time-widget col-span-2">
+                    <div class="widget-header">
+                        <h2>Time Analysis Graph</h2>
+                        <button class="icon-btn"><i data-lucide="clock"></i></button>
+                    </div>
+                    <div class="time-chart-container" id="time-chart-container">
+                         <!-- populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 4. Device Analytics -->
+                <div class="widget device-widget col-span-2">
+                    <div class="widget-header">
+                        <h2>Device Drop-off Comparison</h2>
+                        <button class="icon-btn"><i data-lucide="smartphone"></i></button>
+                    </div>
+                    <div class="device-stats-container" id="device-stats-container">
+                         <!-- populated by JS -->
+                    </div>
+                </div>
+
+                <!-- 10. A/B Testing Simulation -->
+                <div class="widget ab-test-widget col-span-2">
+                    <div class="widget-header">
+                        <h2><i data-lucide="split" style="color:var(--accent-purple);margin-right:8px;"></i> A/B Test: Signup Flow</h2>
+                        <div class="live-badge" style="background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); border-color: rgba(139, 92, 246, 0.3);">
+                            <span class="recording-dot" style="background-color: var(--accent-purple);"></span> LIVE
+                        </div>
+                    </div>
+                    <div class="ab-container" id="ab-container" style="padding: 24px;">
+                        <div class="ab-split">
+                            <div class="ab-variant">
+                                <h3>Version A (Old flow)</h3>
+                                <div class="ab-metric">
+                                    <span class="ab-value" id="ab-con-a">32.4%</span>
+                                    <span class="ab-label">Conversion</span>
+                                </div>
+                            </div>
+                            <div class="ab-vs">VS</div>
+                            <div class="ab-variant variant-b">
+                                <h3>Version B (Optimized)</h3>
+                                <div class="ab-metric">
+                                    <span class="ab-value text-emerald" id="ab-con-b">45.8%</span>
+                                    <span class="ab-label">Conversion</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ab-footer">
+                            <div class="ab-result-pill">
+                                Version B reduces drop-offs by <strong id="ab-improvement" class="text-emerald">+13.4%</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Behavioral Clusters (ML Segmentations) -->
+                <div class="widget cluster-widget col-span-4">
+                    <div class="widget-header">
+                        <h2><i data-lucide="network" style="color:var(--accent-primary);margin-right:8px;"></i> ML Behavioral Cohorts</h2>
+                    </div>
+                    <div class="cluster-container" id="cluster-container" style="display: flex; gap: 16px; padding: 24px;">
+                        <!-- populated by JS -->
+                    </div>
+                </div>
+                
+                <!-- 9. Automated Re-Engagement Interventions -->
+                <div class="widget engagement-widget col-span-4">
+                    <div class="widget-header">
+                        <h2><i data-lucide="zap" style="color:var(--accent-emerald);margin-right:8px;"></i> Automated Re-Engagement Triggers</h2>
+                        <div class="live-badge" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-emerald); border-color: rgba(16, 185, 129, 0.3);">
+                            <span class="recording-dot" style="background-color: var(--accent-emerald);"></span> MONITORING
+                        </div>
+                    </div>
+                    <div class="engagement-list" id="engagement-list">
+                        <!-- populated by JS -->
+                        <div class="placeholder-text">Awaiting drop-off events to trigger automations...</div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    
+    <!-- Real-Time Alerts Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="ml-engine.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
